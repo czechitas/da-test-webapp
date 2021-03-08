@@ -24,11 +24,11 @@ return [
     'student' => [
         'minimum_age_term_starts' => 4,
         // Kolik dní před začátkem kurzu lze vytvářet přihlášky nebo upravovat přihlášky
-        // 0 znamená první den kurzu, 8 je týden před (kurz začíná v pondělí, pak neděle týden před ještě jde)
-        'login_before_start' => 1,
-        'edit_before_start' => 1,
+        // 0 znamená první den kurzu (tj už v průběhu), 8 je týden před (kurz začíná v pondělí, pak neděle týden před ještě jde)
+        'login_before_start' => -999,
+        'edit_before_start' => -999,
         // Kolik dní před koncem kurzu lze žáka odhlásit
-        'logout_before_end' => 0,
+        'logout_before_end' => -999,
     ],
 
     'admin_mail' => 'akademie@czechitas-app.cz',
