@@ -193,14 +193,14 @@ class StudentService extends ModelBaseService
         $ret = null;
         $student = $this->getContext()->fill($data);
         if ($student->isDirty()) {
-            $dirty = $student->getDirty();
+            // $dirty = $student->getDirty();
             $ret = $student->save();
 
             try {
                 // If only private_note is changed, do not send notification
-                if (!(\count($dirty) == 1 && isset($dirty['private_note']))) {
+                // if (!(\count($dirty) == 1 && isset($dirty['private_note']))) {
                     $student->notify(new StudentUpdatedNotification($student));
-                }
+                // }
             } catch (\Throwable $e) {
                 Log::warning($e->getMessage(), ['exception' => $e]);
             }
