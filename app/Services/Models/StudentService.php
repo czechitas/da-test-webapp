@@ -350,6 +350,6 @@ class StudentService extends ModelBaseService
             ->orderBy('received_at', 'desc')
             ->first();
 
-        return $this->generateCertificatePdf('payment', ['paymentDate' => $lastPayment->received_at]);
+        return $this->generateCertificatePdf('payment_non_exist', ['paymentDate' => $lastPayment->received_at]);
     }
 }
