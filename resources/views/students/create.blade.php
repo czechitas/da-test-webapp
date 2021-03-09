@@ -157,7 +157,7 @@
                             <td></td>
                             <td>
                                 <span class="custom-control custom-checkbox{{ $errors->has('terms_conditions') ? ' is-invalid' : '' }}">
-                                    <input type="checkbox" id="terms_conditions" name="terms_conditions" value="1" class="custom-control-input" {{ oldChecked('terms_conditions', '1') }} required>
+                                    <input type="checkbox" id="terms_conditions" name="terms_conditions" value="1" class="custom-control-input" {{ oldChecked('terms_conditions', '1') }}>
                                     <label class="custom-control-label" for="terms_conditions">{!! trans('students.form.terms_conditions') !!}</label>
                                 </span>
                                 @error('terms_conditions')
