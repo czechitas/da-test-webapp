@@ -213,8 +213,8 @@ class ExcelExportService
             $sheet->getCellByColumnAndRow(4, $row)->setValue($student->term->category->name);
             $sheet->getCellByColumnAndRow(5, $row)->setValue($student->total_price);
             $sheet->getCellByColumnAndRow(6, $row)->setValue($student->total_paid);
-            $sheet->getCellByColumnAndRow(7, $row)->setValue("=IF(E{$row} > F{$row}, E{$row} - F{$row}, 0)");
-            $sheet->getCellByColumnAndRow(8, $row)->setValue("=IF(E{$row} < F{$row}, F{$row} - E{$row}, 0)");
+            $sheet->getCellByColumnAndRow(7, $row)->setValue("0");
+            $sheet->getCellByColumnAndRow(8, $row)->setValue("0");
 
             $row += 1;
         }
