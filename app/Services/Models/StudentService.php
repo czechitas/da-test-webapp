@@ -261,7 +261,7 @@ class StudentService extends ModelBaseService
      */
     public function updateLogout(array $data): ?bool
     {
-        $sendNotification = $data['send_notification'];
+        $sendNotification = true; //$data['send_notification'];
         unset($data['send_notification']);
 
         $ret = null;
@@ -298,7 +298,7 @@ class StudentService extends ModelBaseService
      */
     public function updateCanceled(array $data): ?bool
     {
-        $sendNotification = $data['send_notification'];
+        $sendNotification = true; //$data['send_notification'];
         unset($data['send_notification']);
 
         $ret = null;
