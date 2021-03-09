@@ -17,7 +17,7 @@
     <a href="{{ route('static.parents') }}">@lang('app.footer.parents')</a>
     <a href="{{ route('static.teachers') }}">@lang('app.footer.teachers')</a>
     <a href="{{ route('orders.create') }}">@lang('app.footer.order')</a>
-    <a href="https://www.czechitas.cz/">Czechitas</a>
+    <a href="https://www.google.com/">Czechitas</a>
 </div>
 <div class="col-12 col-sm-6 col-md footer__contact">
     <h4>@lang('app.footer.contact')</h4>
