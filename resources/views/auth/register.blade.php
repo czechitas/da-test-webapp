@@ -48,7 +48,7 @@
                             <label for="password" class="col-md-4 col-form-label text-md-right">@lang('auth.registration.password')</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                                <input id="password" type="text" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required autocomplete="off">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -62,7 +62,7 @@
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">@lang('auth.registration.password_confirm')</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                <input id="password-confirm" type="text" class="form-control" name="password_confirmation" required autocomplete="off">
                             </div>
                         </div>
 
