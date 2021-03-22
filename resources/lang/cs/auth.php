@@ -24,7 +24,7 @@ return [
         'title'         => 'Přihlášení',
         'email'         => 'Email',
         'password'      => 'Heslo',
-        'login'         => 'Přihlásit',
+        'login'         => 'Přihlášit',
         'forget_pass'   => 'Zapomněli jste své heslo?',
 
         'first_visit'   => 'Jste zde poprvé?',
