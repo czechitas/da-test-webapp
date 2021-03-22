@@ -42,6 +42,8 @@ class UpdateUserRequest extends CreateUserRequest
     {
         $data = parent::getData();
 
+        unset($data['role']);
+
         if (empty($this->input('password'))) {
             unset($data['password']);
         }
