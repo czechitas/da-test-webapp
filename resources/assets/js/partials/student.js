@@ -5,7 +5,7 @@ module.exports = {
     }
     this.termSettings.init(app, this);
 
-    app.toggleYesInput.init('#restrictions', '#restrictions_yes', app, this);
+    // app.toggleYesInput.init('#restrictions', '#restrictions_yes', app, this);
     app.toggleYesInput.initRadio('.js-loggedOutReasonWrap', 'input[name=logged_out]', '#logged_out_other', app, this);
     app.toggleYesInput.init('#canceled', '#canceled_yes', app, this);
     app.toggleYesInput.init('.js-receivedAtWrap', '#override_received_at', app, this);

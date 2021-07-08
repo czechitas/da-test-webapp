@@ -56,7 +56,7 @@ class CreateStudentRequest extends FormRequest
             'email'             => ['required', new EmailRule(), 'max:255'],
             'restrictions'      => 'required_if:restrictions_yes,1|string|max:255',
             'note'              => 'nullable|string|max:150',
-            'terms_conditions'  => 'accepted',
+            // 'terms_conditions'  => 'accepted',
         ];
 
         if ($term->select_payment) {

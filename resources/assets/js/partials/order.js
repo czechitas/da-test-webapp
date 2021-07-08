@@ -3,7 +3,7 @@ module.exports = {
     if (webSection != 'orders') {
       return;
     }
-    this.ares.init(app);
+    // this.ares.init(app);
   },
 
   ares: {

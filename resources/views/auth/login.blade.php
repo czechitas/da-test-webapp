@@ -59,7 +59,7 @@
                                 @lang('auth.login.login')
                             </button>
 
-                            <a class="btn btn-link" href="{{ route('password.request') }}">
+                            <a class="btn btn-link" href="#">
                                 @lang('auth.login.forget_pass')
                             </a>
                         </div>

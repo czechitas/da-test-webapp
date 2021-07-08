@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'failed'       => 'Tyto přihlašovací údaje neodpovídají žadnému záznamu.',
+    // 'failed'       => 'Tyto přihlašovací údaje neodpovídají žadnému záznamu.',
     'is_blocked'   => 'Uživatel je zablokován! Pro odblokování kontaktuje správce',
     'throttle'     => 'Příliš mnoho pokusů o přihlášení. Zkuste to prosím znovu za :seconds vteřin.',
 
@@ -24,10 +24,10 @@ return [
         'title'         => 'Přihlášení',
         'email'         => 'Email',
         'password'      => 'Heslo',
-        'login'         => 'Přihlásit',
+        'login'         => 'Přihlášit',
         'forget_pass'   => 'Zapomněli jste své heslo?',
 
-        'first_visit'   => 'Jste zde poprvé?',
+        'first_visit'   => 'Jste zde podruhé?',
         'register'      => 'Zaregistrujte se',
     ],
 

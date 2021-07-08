@@ -18,14 +18,14 @@ class CheckDisabledUsers
      */
     public function handle(Request $request, Closure $next)
     {
-        $user = Auth::user();
+        // $user = Auth::user();
 
-        if ($user && $user->is_blocked) {
-            Auth::logout();
-            Alert::error(\trans('auth.is_blocked'))->flash();
+        // if ($user && $user->is_blocked) {
+        //     Auth::logout();
+        //     Alert::error(\trans('auth.is_blocked'))->flash();
 
-            return \redirect()->route('login');
-        }
+        //     return \redirect()->route('login');
+        // }
 
         return $next($request);
     }

@@ -19,7 +19,7 @@
                             </p>
                         </div>
                         <div class="col-sm-7">
-                            <iframe style="border:none" src="https://frame.mapy.cz/s/mesupokava" width="400" height="280" frameborder="0"></iframe>
+                            <iframe style="border:none" src="https://frame.mapy.cz/s/jajasumedo" width="400" height="280" frameborder="0"></iframe>
                         </div>
                     </div>
                 </div>

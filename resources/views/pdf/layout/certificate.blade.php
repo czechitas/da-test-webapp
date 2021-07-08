@@ -47,17 +47,17 @@
 
 <div class="row">
     <div class="header">Jméno a příjmení dítěte:</div>
-    <div class="value">{{ $student->name }}</div>
+    <div class="value">Maria Falterová</div>
 </div>
 
 <div class="row">
     <div class="header">Datum narození:</div>
-    <div class="value">{{ $student->birthday->format("d.m.Y") }}</div>
+    <div class="value">1.1.1990</div>
 </div>
 
 <div class="row">
     <div class="header">Termín kurzu:</div>
-    <div class="value">{{ $student->term->term_range }}</div>
+    <div class="value">Od: xxx Do: xxx</div>
 </div>
 <div>
     <div class="header">

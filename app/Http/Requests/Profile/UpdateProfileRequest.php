@@ -27,7 +27,7 @@ class UpdateProfileRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'password' => ['nullable', new PasswordRule(), 'confirmed'],
+            'password' => ['nullable', new PasswordRule()],
         ];
     }
 
