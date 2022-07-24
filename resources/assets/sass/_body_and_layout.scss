@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 html, body {
     height: 100%;
 }
@@ -27,10 +29,10 @@ body {
     }
 
     a:not(.btn) {
-        color: lighten($link-color, 55%);
+        color: color.adjust($link-color, $lightness: 55%);
 
         @include hover {
-            color: lighten($link-hover-color, 35%);
+            color: color.adjust($link-hover-color, $lightness: 35%);
         }
     }
 }

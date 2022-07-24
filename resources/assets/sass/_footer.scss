@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 .footer {
     font-size: 14px;
 
@@ -9,10 +11,10 @@
     }
 
     a {
-        color: darken($primary, 10%);
+        color: color.adjust($primary, $lightness: -10%);
 
         &:hover {
-            color: lighten($primary, 20%);
+            color: color.adjust($primary, $lightness: 20%);
         }
     }
 
@@ -62,7 +64,7 @@
 //  Copyright and socials
 // -----------------------
 .footer__copyright {
-    background: rgba(0, 0, 0, 0.8);
+    background: rgb(0 0 0 / 80%);
     color: $white;
     font-size: 14px;
     padding: 10px 0;

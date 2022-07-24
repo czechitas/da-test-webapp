@@ -1,29 +1,39 @@
 ///////////////
 // Libraries //
 ///////////////
-global.$ = global.jQuery = require('jquery');
-global.toastr = require('toastr');
-require('../../../node_modules/flatpickr/dist/flatpickr.js');
-require('flatpickr/dist/l10n/cs.js');
 
-// Used some methods
-global.Util = require('bootstrap/js/dist/util');
-require('bootstrap/js/dist/collapse');
-require('bootstrap/js/dist/dropdown');
-require('bootstrap/js/dist/modal');
-require('bootstrap/js/dist/tooltip');
-require('bootstrap/js/dist/tab');
+import jQuery from 'jquery';
+import toastr from 'toastr';
 
-require('bootstrap-select');
-require('bootstrap-select/dist/js/i18n/defaults-cs_CZ');
+import flatpickr from '../../../node_modules/flatpickr/dist/flatpickr.js'; // Don't need babel then
+import 'flatpickr/dist/l10n/cs.js';
+
+import * as bsUtils from 'bootstrap/js/dist/util.js';
+import 'bootstrap/js/dist/collapse.js';
+import 'bootstrap/js/dist/dropdown.js';
+import 'bootstrap/js/dist/modal.js';
+import 'bootstrap/js/dist/tooltip.js';
+import 'bootstrap/js/dist/tab.js';
+
+import 'bootstrap-select';
+import 'bootstrap-select/dist/js/i18n/defaults-cs_CZ.js';
+
+import app from './partials/app.js';
+import order from './partials/order.js';
+import student from './partials/student.js';
+
+window.$ = window.jQuery = jQuery;
+window.jQuery.fn.flatpickr = function (config) {
+  return flatpickr(this, config);
+};
+window.toastr = toastr;
+window.Util = bsUtils;
 
 /////////////////
 // Application //
 /////////////////
-
-global.CzechitasApp = require('./partials/app');
-global.CzechitasApp.modules['order'] = require('./partials/order');
-global.CzechitasApp.modules['student'] = require('./partials/student');
-global.CzechitasApp.modules['term'] = require('./partials/term');
+window.CzechitasApp = app;
+window.CzechitasApp.modules['order'] = order;
+window.CzechitasApp.modules['student'] = student;
 
 CzechitasApp.init();

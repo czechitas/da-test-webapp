@@ -1,3 +1,3 @@
-require('magnific-popup');
+import 'magnific-popup';
 
 CzechitasApp.magnificPopup.loaded = true;

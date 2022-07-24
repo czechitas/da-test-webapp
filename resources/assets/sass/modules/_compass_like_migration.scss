@@ -1,3 +1,6 @@
+@use 'sass:string';
+@use 'sass:map';
+
 $font-path: '../fonts/';
 $image-path: '../img/';
 // =============================================================================
@@ -5,7 +8,7 @@ $image-path: '../img/';
 // =============================================================================
 
 @function str-replace($string, $search, $replace: '') {
-    $index: str-index($string, $search);
+    $index: string.index($string, $search);
 
     @if $index {
         // stylelint-disable-next-line max-line-length
@@ -35,19 +38,19 @@ $image-path: '../img/';
     );
 
     @each $ext in $exts {
-        $extmod: if(map-has-key($extmods, $ext), $ext + map-get($extmods, $ext), $ext);
-        $format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
+        $extmod: if(map.has-key($extmods, $ext), $ext + map.get($extmods, $ext), $ext);
+        $format: if(map.has-key($formats, $ext), map.get($formats, $ext), $ext);
 
         @if $ext == 'eot' {
             // stylelint-disable-next-line function-url-quotes
-            $src-eot: append($src-eot, url(quote($font-path + $path + ".eot")) );
+            $src-eot: list.append($src-eot, url(string.quote($font-path + $path + ".eot")) );
         }
         // stylelint-disable-next-line function-url-quotes
-        $src: append($src, url(quote($font-path + $path + "." + $extmod)) format(quote($format)), comma);
+        $src: list.append($src, url(string.quote($font-path + $path + "." + $extmod)) format(string.quote($format)), comma);
     }
 
     @font-face {
-        font-family: quote($name);
+        font-family: string.quote($name);
         font-style: $style;
         font-weight: $weight;
         src: $src-eot;
@@ -56,9 +59,9 @@ $image-path: '../img/';
 }
 
 @function image-url($path) {
-    @return url(quote($image-path + $path)); // stylelint-disable-line function-url-quotes
+    @return url(string.quote($image-path + $path)); // stylelint-disable-line function-url-quotes
 }
 
 @function inline-image($path) {
-    @return inline(quote($path));
+    @return inline(string.quote($path));
 }

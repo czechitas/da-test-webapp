@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   modules: {},
   webSection: '',
 
@@ -207,6 +207,7 @@ module.exports = {
       }
       if (this.dtConfig.withArchiveFilter === true) {
         $(document)
+          .one('preInit.dt', this.addArchiveFilter.bind(this))
           .on('stateSaveParams.dt', function (e, settings, data) {
             data.archive = { year: $('.js-archiveFilterSelect').val() };
           })
@@ -318,6 +319,20 @@ module.exports = {
           }
           return match;
         });
+    },
+
+    addArchiveFilter: function () {
+      var filter = $('.js-archiveFilter');
+      filter.removeClass('d-none').prependTo('.withArchive .dataTables_filter');
+      filter
+        .find('select')
+        .addClass('form-control-sm')
+        .on(
+          'change',
+          function () {
+            this.instance.draw();
+          }.bind(this)
+        );
     },
   },
 

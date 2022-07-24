@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   init: function (app, webSection) {
     if (webSection != 'orders') {
       return;

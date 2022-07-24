@@ -1,9 +1,9 @@
 // var $ = require('jquery');
 
-require('datatables.net');
-require('datatables.net-bs4');
-require('datatables.net-fixedheader-bs4');
-require('datatables.net-responsive-bs4');
+import 'datatables.net';
+import 'datatables.net-bs4';
+import 'datatables.net-fixedheader-bs4';
+import 'datatables.net-responsive-bs4';
 
 window.DatatablesTranslation = {
   cs: {

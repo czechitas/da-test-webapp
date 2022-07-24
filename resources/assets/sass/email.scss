@@ -27,7 +27,7 @@ $mail-line-height: 1.4em;
 // ------------------------------------------------
 
 /* Base */
-body, body *:not(html):not(style):not(br):not(tr):not(code) {
+body, body *:not(html, style, br, tr, code) {
     box-sizing: border-box;
     font-family: Avenir, Helvetica, sans-serif;
 }
@@ -245,6 +245,12 @@ img {
     padding: 7px 5px;
 }
 
+.two-cols-table th {
+    border-bottom: 0;
+    padding: 0;
+    width: 50%;
+}
+
 .content-cell {
     padding: 25px;
 }
@@ -263,7 +269,7 @@ img {
 
 .button {
     border-radius: 3px;
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
+    box-shadow: 0 2px 3px rgb(0 0 0 / 16%);
     color: $mail-button-color;
     display: inline-block;
     text-decoration: none;

@@ -1,12 +1,13 @@
 /*eslint "@typescript-eslint/no-var-requires": "off" */
-const path = require('path');
-const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const TerserJSPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const IgnoreEmitPlugin = require('ignore-emit-webpack-plugin');
-const RemovePlugin = require('remove-files-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
+import * as path from 'path';
+import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import TerserJSPlugin from 'terser-webpack-plugin';
+import CssMinimizerWebpackPlugin from 'css-minimizer-webpack-plugin';
+import IgnoreEmitPlugin from 'ignore-emit-webpack-plugin';
+import RemovePlugin from 'remove-files-webpack-plugin';
+import CopyPlugin from 'copy-webpack-plugin';
+import sass from 'sass';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 const keepGitIgnore = (absPath) => !absPath.match(/\/\.gitignore$/);
@@ -36,7 +37,7 @@ let webpackConfig = {
   },
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, './'),
+    path: path.resolve('./'),
     publicPath: '/',
   },
   target: 'browserslist',
@@ -58,11 +59,13 @@ let webpackConfig = {
       ? undefined
       : [
           new TerserJSPlugin({}),
-          new OptimizeCSSAssetsPlugin({
-            assetNameRegExp: /(?<!default)\.css$/g,
-            cssProcessorOptions: {
-              map: { inline: false, annotation: true },
-            },
+          new CssMinimizerWebpackPlugin({
+            exclude: /default\.css/g,
+            minimizerOptions:{
+              processorOptions: {
+                map: { inline: false, annotation: true },
+              },
+            }
           }),
         ],
   },
@@ -78,7 +81,7 @@ let webpackConfig = {
             loader: 'sass-loader',
             options: {
               sourceMap: true,
-              sassOptions: { implementation: require('sass'), outputStyle: 'expanded' },
+              sassOptions: { implementation: sass, outputStyle: 'expanded' },
             },
           },
         ],
@@ -99,7 +102,7 @@ let webpackConfig = {
         {
           from: 'fa-solid-*',
           to: './public/fonts/',
-          context: path.resolve(__dirname, './node_modules/@fortawesome/fontawesome-free/webfonts/'),
+          context: path.resolve('./node_modules/@fortawesome/fontawesome-free/webfonts/'),
         },
       ],
     }),
@@ -136,4 +139,4 @@ let webpackConfig = {
   ],
 };
 
-module.exports = webpackConfig;
+export default webpackConfig;

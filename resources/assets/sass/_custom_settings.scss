@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 $dark-red: #c1006a;
 $blue: #3a2a90; // Taken from bootstrap
 $gray-400: #ced4da; // Taken from bootstrap
@@ -18,7 +20,7 @@ $secondary: $blue;
 // $dark:                      $gray-600;
 
 $body-bg: #f4f3f1;
-$link-hover-color: lighten($primary, 30%);
+$link-hover-color: color.adjust($primary, $lightness: 30%);
 $link-hover-decoration: none;
 
 // -- Fonts
@@ -53,6 +55,6 @@ $component-active-bg: $secondary;
 $custom-control-indicator-checked-bg: $primary !default;
 $custom-control-indicator-checked-disabled-bg: rgba($primary, 0.5) !default;
 // $custom-control-indicator-active-color:         $component-active-color !default;
-$custom-control-indicator-active-bg: lighten($primary, 35%) !default;
+$custom-control-indicator-active-bg: color.adjust($primary, $lightness: 35%) !default;
 
 $custom-control-label-disabled-color: $gray-400 !default;
