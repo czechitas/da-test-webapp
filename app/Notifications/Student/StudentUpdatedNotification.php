@@ -6,8 +6,7 @@ namespace CzechitasApp\Notifications\Student;
 
 class StudentUpdatedNotification extends StudentBaseNotification
 {
-    /** @var bool */
-    protected $addQRPayment = true;
+    protected bool $addQRPayment = true;
 
     /**
      * Get view path of template to render as email

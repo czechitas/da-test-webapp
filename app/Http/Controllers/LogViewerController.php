@@ -11,8 +11,7 @@ use Illuminate\Support\Facades\Crypt;
 
 class LogViewerController extends Controller
 {
-    /** @var LogViewer */
-    private $logViewer;
+    private LogViewer $logViewer;
 
     public function __construct(LogViewer $logViewer)
     {

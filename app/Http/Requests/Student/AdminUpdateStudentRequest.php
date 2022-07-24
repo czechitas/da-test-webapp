@@ -9,8 +9,7 @@ use CzechitasApp\Models\Term;
 
 class AdminUpdateStudentRequest extends AdminCreateStudentRequest
 {
-    /** @var bool */
-    protected $keepTerm = false;
+    protected bool $keepTerm = false;
 
     /**
      * Get the validation rules that apply to the request.

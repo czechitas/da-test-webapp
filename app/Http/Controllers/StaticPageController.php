@@ -10,8 +10,7 @@ use Illuminate\View\View;
 
 class StaticPageController extends Controller
 {
-    /** @var BreadcrumbService */
-    private $breadcrumbService;
+    private BreadcrumbService $breadcrumbService;
 
     public function __construct(BreadcrumbService $breadcrumbService)
     {

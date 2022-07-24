@@ -77,7 +77,6 @@ class RegisterController extends Controller
      * @param         User $user
      * @return        mixed
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     protected function registered(Request $request, $user)
     {

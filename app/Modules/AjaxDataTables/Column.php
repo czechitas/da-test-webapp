@@ -12,44 +12,31 @@ use Illuminate\Support\Str;
 
 class Column
 {
-    /** @var string|null */
-    public $relation;
+    public ?string $relation = null;
 
-    /** @var string|Expression */
-    public $name;
+    public string|Expression $name;
 
-    /** @var string|null */
-    public $alias;
+    public ?string $alias = null;
 
-    /** @var string|null */
-    public $jsonAlias;
+    public ?string $jsonAlias = null;
 
-    /** @var bool */
-    public $fromDB = true;
+    public bool $fromDB = true;
 
-    /** @var bool */
-    public $select = true;
+    public bool $select = true;
 
-    /** @var bool */
-    public $order = true;
+    public bool $order = true;
 
-    /** @var bool */
-    public $inTable = true;
+    public bool $inTable = true;
 
-    /** @var bool */
-    public $inData = true;
+    public bool $inData = true;
 
-    /** @var string|Closure */
-    public $searchOperator = 'LIKE';
+    public string|Closure|null $searchOperator = 'LIKE';
 
-    /** @var bool */
-    public $searchExactly = false;
+    public bool $searchExactly = false;
 
-    /** @var bool|Closure */
-    public $orderCallbackClosure = false;
+    public ?Closure $orderCallbackClosure = null;
 
-    /** @var Closure|null */
-    public $beforePrintCallback = null;
+    public ?Closure $beforePrintCallback = null;
 
     /**
      * Create new column of DataTable
@@ -58,7 +45,7 @@ class Column
      * @param string|null       $alias     Name of column as it should be selected - AS in sql
      * @param string|null       $jsonAlias Name which should appear in final JSON
      */
-    public function __construct($name, ?string $alias = null, ?string $jsonAlias = null)
+    public function __construct(string|Expression $name, ?string $alias = null, ?string $jsonAlias = null)
     {
         if (Str::contains($name, '.')) {
             $parts = \explode('.', $name);
@@ -77,7 +64,7 @@ class Column
      *
      * @return static
      */
-    public function jsonAlias(string $jsonAlias)
+    public function jsonAlias(string $jsonAlias): static
     {
         $this->jsonAlias = $jsonAlias;
 
@@ -89,7 +76,7 @@ class Column
      *
      * @return static
      */
-    public function noDB()
+    public function noDB(): static
     {
         $this->fromDB = false;
 
@@ -101,7 +88,7 @@ class Column
      *
      * @return static
      */
-    public function noSelect()
+    public function noSelect(): static
     {
         $this->select = false;
 
@@ -113,7 +100,7 @@ class Column
      *
      * @return static
      */
-    public function noOrder()
+    public function noOrder(): static
     {
         $this->order = false;
 
@@ -125,7 +112,7 @@ class Column
      *
      * @return static
      */
-    public function notInTable()
+    public function notInTable(): static
     {
         $this->inTable = false;
 
@@ -138,7 +125,7 @@ class Column
      *
      * @return static
      */
-    public function notInData()
+    public function notInData(): static
     {
         $this->inData = false;
         $this->notInTable();
@@ -152,7 +139,7 @@ class Column
      *
      * @return static
      */
-    public function onlyExtra()
+    public function onlyExtra(): static
     {
         $this->search(null)->noOrder()->notInTable();
 
@@ -164,7 +151,7 @@ class Column
      *
      * @return static
      */
-    public function search(?string $operator)
+    public function search(?string $operator): static
     {
         $this->searchOperator = $operator;
 
@@ -176,7 +163,7 @@ class Column
      *
      * @return static
      */
-    public function dateSearch(string $format)
+    public function dateSearch(string $format): static
     {
         $this->searchOperator = function (Builder $q, $search) use ($format): void {
             $q->orWhereRaw('DATE_FORMAT(`' . $this->name . "`, '{$format}') LIKE ?", ["%{$search}%"]);
@@ -191,7 +178,7 @@ class Column
      * @param  Closure $callback Callback - 1st param is query and second ASC/DESC
      * @return static
      */
-    public function orderCallback(Closure $callback)
+    public function orderCallback(Closure $callback): static
     {
         $this->orderCallbackClosure = $callback;
 
@@ -204,7 +191,7 @@ class Column
      * @param  Closure $callback First param is model and second value to be printed
      * @return static
      */
-    public function printCallback(Closure $callback)
+    public function printCallback(Closure $callback): static
     {
         $this->beforePrintCallback = $callback;
 
@@ -230,10 +217,8 @@ class Column
 
     /**
      * Get final name under which is returned value from DB
-     *
-     * @return string|Expression
      */
-    public function getFinalName()
+    public function getFinalName(): string|Expression
     {
         return $this->getSelect(true);
     }
@@ -270,10 +255,9 @@ class Column
     /**
      * Get name for select - can be DB::raw
      *
-     * @param  bool $finalName Get final name @see getFinalName
-     * @return string|Expression
+     * @param bool $finalName Get final name @see getFinalName
      */
-    public function getSelect(bool $finalName = false)
+    public function getSelect(bool $finalName = false): string|Expression
     {
         if (!empty($this->alias)) {
             if ($finalName) {
@@ -288,10 +272,8 @@ class Column
 
     /**
      * Get name of the column for WHERE clause
-     *
-     * @return string|Expression
      */
-    public function getWhereName()
+    public function getWhereName(): string|Expression
     {
         if (!empty($this->alias)) {
             return DB::raw($this->name);
@@ -302,10 +284,8 @@ class Column
 
     /**
      * Get name of the column for ORDER BY clause
-     *
-     * @return string|Expression
      */
-    public function getOrderByName()
+    public function getOrderByName(): string|Expression
     {
         return $this->getSelect(true);
     }

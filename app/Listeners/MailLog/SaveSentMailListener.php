@@ -8,14 +8,13 @@ use CzechitasApp\Services\Models\SendEmailService;
 use Illuminate\Mail\Events\MessageSent;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use Swift_Attachment;
-use Swift_Image;
-use Swift_Message;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Part\DataPart;
 
 class SaveSentMailListener
 {
-    /** @var SendEmailService */
-    private $sendEmailService;
+    private SendEmailService $sendEmailService;
 
     public function __construct(SendEmailService $sendEmailService)
     {
@@ -35,7 +34,7 @@ class SaveSentMailListener
                 'to'            => $this->formatAddresses($event->message->getTo()),
                 'subject'       => $event->message->getSubject(),
                 'body'          => $this->getBodyWithEmbededImage($event->message),
-                'attachments'   => $this->formatAttachments($event->message->getChildren()),
+                'attachments'   => $this->formatAttachments($event->message->getAttachments()),
             ];
 
             $this->sendEmailService->insert($data);
@@ -45,39 +44,39 @@ class SaveSentMailListener
     }
 
     /**
-     * @param mixed $addresses
+     * @param Address[] $addresses
      */
-    protected function formatAddresses($addresses): ?string
+    protected function formatAddresses(array $addresses): ?string
     {
         $formated = [];
-        foreach ($addresses as $mail => $name) {
-            $formated[] = empty($name)
-                ? $mail
-                : $name . ' <' . $mail . '>';
+        foreach ($addresses as $addr) {
+            $formated[] = $addr->toString();
         }
 
         return empty($formated) ? null : \implode(', ', $formated);
     }
 
     /**
-     * @param  mixed $children
+     * @param  array|DataPart[] $children
      * @return array<string>
      */
-    protected function formatAttachments($children): ?array
+    protected function formatAttachments(array $children): ?array
     {
         $attachments = [];
         foreach ($children as $child) {
-            if ($child instanceof Swift_Attachment) {
-                $attachments[] = $child->getFilename();
-            }
+            $attachments[] = $child->getFilename();
         }
 
         return empty($attachments) ? null : $attachments;
     }
 
-    public function getBodyWithEmbededImage(Swift_Message $message): string
+    public function getBodyWithEmbededImage(Email $message): string
     {
-        $body = $message->getBody();
+        $body = $message->getHtmlBody();
+        if (!\is_string($body)) {
+            return '';
+        }
+
         if (Str::contains($body, '</body>')) {
             $script = "document.querySelectorAll('img[src^=cid]').forEach(
                 function(el){
@@ -87,19 +86,21 @@ class SaveSentMailListener
             )";
 
             $cids = [];
-            foreach ($message->getChildren() as $child) {
-                if ($child instanceof Swift_Image) {
-                    $cids[$child->getId()] = \sprintf(
+            /** @var DataPart[] $attachments */
+            $attachments = $message->getAttachments();
+            foreach ($attachments as $child) {
+                if ($child->getMediaType() === 'image' && $child->hasContentId()) {
+                    $cids[$child->getContentId()] = \sprintf(
                         'data:%s;base64,%s',
                         $child->getContentType(),
-                        \base64_encode($child->getBody())
+                        \base64_encode($child->getBody()),
                     );
                 }
             }
             $body = Str::replaceFirst(
                 '</body>',
                 \sprintf('<script>var cids = %s; %s</script></body>', \json_encode($cids), $script),
-                $body
+                $body,
             );
         }
 

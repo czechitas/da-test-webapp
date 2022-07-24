@@ -10,8 +10,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 
 class OrderSignedNotification extends BaseQueueableNotification
 {
-    /** @var Order */
-    private $order;
+    private Order $order;
 
     public function __construct(Order $order)
     {

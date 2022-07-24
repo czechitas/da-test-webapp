@@ -19,8 +19,12 @@ use Illuminate\Support\Str;
  *
  * @param int|string|BaseModel|array<string, int|string|BaseModel>|array<int|string|BaseModel> $parameters
  */
-function routeBack(string $name, $parameters = [], ?string $back = null, bool $absolute = true): string
-{
+function routeBack(
+    string $name,
+    int|string|BaseModel|array $parameters = [],
+    ?string $back = null,
+    bool $absolute = true,
+): string {
     $parameters = Arr::wrap($parameters);
 
     $routeBack = $back ?? Request::query('routeBack', null);
@@ -41,6 +45,7 @@ function routeBack(string $name, $parameters = [], ?string $back = null, bool $a
  */
 function oldChecked(string $inputName, $inputValue, $defaultValue = null, string $checkKeyword = 'checked'): string
 {
+    // phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators
     if (old($inputName, $defaultValue) == $inputValue) {
         return $checkKeyword;
     }
@@ -80,11 +85,10 @@ function oldSelectedMultiple(string $inputName, $inputValue, $defaultValue = nul
 /**
  * Test, if given field exists in old
  *
- * @param  string      $inputName Input name, passed to old function
- * @param  string|null $keyword   If is null, true/false is returned. If is string and input exists, keyword is returned
- * @return bool|string
+ * @param string      $inputName Input name, passed to old function
+ * @param string|null $keyword   If is null, true/false is returned. If is string and input exists, keyword is returned
  */
-function oldExists(string $inputName, ?string $keyword = null)
+function oldExists(string $inputName, ?string $keyword = null): bool|string
 {
     $old = old($inputName);
     if (empty($keyword)) {
@@ -215,14 +219,15 @@ function formatPrice($price, ?string $currency = null, bool $addCents = false, s
     $isNegativePrice = Str::startsWith($parsed[0], '-');
 
     $strVal = str_split(str_replace('-', '', $parsed[0]));
-    for ($i = 3; $i < count($strVal); $i += 4) {
+    $c = count($strVal);
+    for ($i = 3; $i < $c; $i += 4) {
         array_splice($strVal, count($strVal) - $i, 0, ' ');
     }
     $cents = '';
     if ($addCents) {
         $cents = '00';
         if (!empty($parsed[1])) {
-            $cents = strlen($parsed[1]) == 2 ? $parsed[1] : $parsed[1] . '0';
+            $cents = strlen($parsed[1]) === 2 ? $parsed[1] : $parsed[1] . '0';
         }
         $cents = $centsSeparator . $cents;
     }
@@ -356,8 +361,12 @@ function getFontAwesomeFileIconClass(string $filename): string
  * @param  array<string> $replace
  * @return Translator|string|array<string>|null
  */
-function transDef(string $key, ?string $default = '', array $replace = [], ?string $locale = null)
-{
+function transDef(
+    string $key,
+    ?string $default = '',
+    array $replace = [],
+    ?string $locale = null,
+): Translator|string|array|null {
     $translated = trans($key, $replace, $locale);
 
     return $translated === $key ? $default : $translated;
@@ -371,7 +380,7 @@ function getReleaseVersion(): string
     return sprintf(
         '%s@%s',
         Str::slug(config('app.name')),
-        config('app.release_version')
+        config('app.release_version'),
     );
 }
 
@@ -414,12 +423,12 @@ function getServerName(): string
 function dbTablePrefix(): string
 {
     $serverName = getServerName();
-    if (env('DISABLE_PREFIXES', false) == true || $serverName == '') {
+    if (env('DISABLE_PREFIXES', false) === true || $serverName === '') {
         return '';
     }
     $prefix = str_replace(['czechitas', 'app'], '', Str::before($serverName, '.'));
     $prefix = Str::slug($prefix);
-    if ($prefix == '') {
+    if ($prefix === '') {
         return '';
     }
 
@@ -429,12 +438,12 @@ function dbTablePrefix(): string
 function baseFolderName(): string
 {
     $serverName = getServerName();
-    if (env('DISABLE_SUBFOLDERS', false) == true || $serverName == '') {
+    if (env('DISABLE_SUBFOLDERS', false) === true || $serverName === '') {
         return '';
     }
     $prefix = str_replace(['czechitas', 'app'], '', Str::before($serverName, '.'));
     $prefix = Str::slug($prefix);
-    if ($prefix == '') {
+    if ($prefix === '') {
         return '';
     }
 

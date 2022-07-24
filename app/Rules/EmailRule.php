@@ -11,8 +11,7 @@ use Illuminate\Contracts\Validation\Rule;
 
 class EmailRule implements Rule
 {
-    /** @var ?string */
-    private $failsOnRule = null;
+    private ?string $failsOnRule = null;
 
     /**
      * Determine if the validation rule passes.

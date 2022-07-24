@@ -137,7 +137,7 @@
                                     <tr>
                                         <td colspan="2" class="text-center">
                                             <h4>@lang('students.form.qr_payment')</h4>
-                                            <img src="data:image/png;base64,{!! $studentService->setContext($student)->getQRPayment()->toPngText(true) !!}" alt="QR Platba" style="width: 200px;">
+                                            <img src="data:image/png;base64,{!! $studentService->setContext($student)->getQRPayment()->toPngText(true, ['size' => 300]) !!}" alt="QR Platba" style="width: 300px;">
                                         </td>
                                     </tr>
                                 @endif

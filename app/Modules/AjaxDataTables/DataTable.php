@@ -15,17 +15,13 @@ class DataTable
 {
     /**
      * Current AJAX request
-     *
-     * @var Request
      */
-    protected $request;
+    protected Request $request;
 
     /**
      * All table columns and settings
-     *
-     * @var TableColumns
      */
-    protected $columns;
+    protected TableColumns $columns;
 
     /**
      * Init ajax data table
@@ -108,10 +104,9 @@ class DataTable
     /**
      * Add to query all columns to be selected
      *
-     * @param Builder|Relation $query
-     * @param array<string>    $extraColumns Extra columns to be selected
+     * @param array<string> $extraColumns Extra columns to be selected
      */
-    protected function select($query, ?string $relation = null, array $extraColumns = []): void
+    protected function select(Builder|Relation $query, ?string $relation = null, array $extraColumns = []): void
     {
         $columns = $this->columns->selectAllColumns ? ['*'] : [];
         $countColumns = [];
@@ -136,10 +131,8 @@ class DataTable
 
     /**
      * Add to query all where conditions
-     *
-     * @param Builder|Relation $query
      */
-    protected function where($query): void
+    protected function where(Builder|Relation $query): void
     {
         $search = $this->request->input('search.value');
         if ($search === null || \strlen($search) <= 0) {
@@ -165,10 +158,8 @@ class DataTable
 
     /**
      * Add to query all where conditions in given relation
-     *
-     * @param Builder|Relation $query
      */
-    protected function innerWhere($query, string $search, ?string $relation = null): void
+    protected function innerWhere(Builder|Relation $query, string $search, ?string $relation = null): void
     {
         foreach ($this->columns->getWhereColumns($relation) as $column) {
             if ($column->searchOperator instanceof Closure) {
@@ -177,7 +168,7 @@ class DataTable
                 $query->orWhere(
                     $column->getWhereName(),
                     $column->searchOperator,
-                    $this->formatSearchValue($search, $column)
+                    $this->formatSearchValue($search, $column),
                 );
             }
         }
@@ -185,17 +176,15 @@ class DataTable
 
     /**
      * Add to query all order by conditions
-     *
-     * @param Builder|Relation $query
      */
-    protected function order($query, ?string $relation = null): void
+    protected function order(Builder|Relation $query, ?string $relation = null): void
     {
         $orders = $this->request->input('order');
         if (empty($orders) || !\is_array($orders)) {
             return;
         }
         foreach ($orders as $order) {
-            $dir = $order['dir'] == 'desc' ? 'desc' : 'asc';
+            $dir = $order['dir'] === 'desc' ? 'desc' : 'asc';
 
             $columnToOrder = $this->columns->getNthVisibleTableColumn(\intval($order['column']), $relation);
             if (empty($columnToOrder) || !$columnToOrder->isOrderable()) {
@@ -212,10 +201,8 @@ class DataTable
 
     /**
      * Add limit to query builder according to request
-     *
-     * @param Builder|Relation $query
      */
-    protected function limitQuery($query): Builder
+    protected function limitQuery(Builder|Relation $query): Builder
     {
         return $query
             ->offset(\intval($this->request->input('start')))
@@ -225,10 +212,9 @@ class DataTable
     /**
      * Format data to be returned to JS DataTable
      *
-     * @param  Builder|Relation $query
      * @return array<array<string, mixed>>
      */
-    protected function getStructuredData($query): array
+    protected function getStructuredData(Builder|Relation $query): array
     {
         // Collection of all data
         $modelData = $this->limitQuery($query)->get();
@@ -238,7 +224,7 @@ class DataTable
         foreach ($modelData as $baseModel) {
             $record = [];
             foreach ($columns as $column) {
-                if ($column->inData == false) {
+                if ($column->inData === false) {
                     continue;
                 }
                 $finalName = $column->getFinalName(); // Final name in the model

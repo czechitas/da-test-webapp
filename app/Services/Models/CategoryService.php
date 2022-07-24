@@ -235,7 +235,7 @@ class CategoryService extends ModelBaseService
      */
     public function renameImage(string $oldImagePath): void
     {
-        if ($oldImagePath == $this->getImagePath()) {
+        if ($oldImagePath === $this->getImagePath()) {
             return;
         }
         if (UploadStorageService::exists($oldImagePath)) {

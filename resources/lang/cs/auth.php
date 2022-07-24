@@ -66,9 +66,9 @@ return [
     ],
 
     'confirm'      => [
-        'title'   => 'Ověření hesla',
-        'heading' => 'Než budete pokračovat, prosím ověřte heslo',
-        'button'  => 'Ověřit heslo',
+        'title'        => 'Ověření hesla',
+        'heading'      => 'Než budete pokračovat, prosím ověřte heslo',
+        'button'       => 'Ověřit heslo',
 
         'bad_password' => 'Zadané heslo není správné',
     ],

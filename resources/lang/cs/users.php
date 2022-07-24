@@ -21,9 +21,9 @@ return [
     ],
 
     'role'          => [
-        'master'     => 'Hl. Správce',
-        'admin'      => 'Správce',
-        'parent'     => 'Rodič',
+        'master' => 'Hl. Správce',
+        'admin'  => 'Správce',
+        'parent' => 'Rodič',
     ],
 
     'form'          => [

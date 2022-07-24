@@ -86,40 +86,32 @@ class Student extends BaseModel
 
     /**
      * Parent (user) relationship builder
-     *
-     * @return User|BelongsTo
      */
-    public function parent()
+    public function parent(): User|BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
     /**
      * Term relationship builder
-     *
-     * @return Term|BelongsTo
      */
-    public function term()
+    public function term(): Term|BelongsTo
     {
         return $this->belongsTo(Term::class);
     }
 
     /**
      * Student payments relationship builder
-     *
-     * @return StudentPayment|HasMany
      */
-    public function studentPayments()
+    public function studentPayments(): StudentPayment|HasMany
     {
         return $this->hasMany(StudentPayment::class);
     }
 
     /**
      * Student send emails relationship builder
-     *
-     * @return SendEmail|HasMany
      */
-    public function sendEmails()
+    public function sendEmails(): SendEmail|HasMany
     {
         return $this->hasMany(SendEmail::class);
     }

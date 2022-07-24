@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CzechitasApp\Http\Requests\User;
 
+use CzechitasApp\Models\User;
 use Illuminate\Validation\Rules\Unique;
 use PasswordRule\PasswordRule;
 
@@ -14,6 +15,7 @@ class UpdateUserRequest extends CreateUserRequest
      */
     protected function getUniqueRule(string $table = 'users', string $column = 'NULL'): Unique
     {
+        /** @var User $user */
         $user = $this->route('user');
 
         return parent::getUniqueRule($table, $column)->ignore($user->id);

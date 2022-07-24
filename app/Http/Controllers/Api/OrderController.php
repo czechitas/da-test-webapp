@@ -12,8 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class OrderController extends Controller
 {
-    /** @var OrderService */
-    protected $orderService;
+    protected OrderService $orderService;
 
     public function __construct(OrderService $orderService)
     {

@@ -33,7 +33,7 @@ abstract class Enum
     {
         if (!self::isValidValue($value)) {
             throw new \Exception(
-                "Value {$value} is not valid, possible values: " . \implode(', ', self::getAvailableValues())
+                "Value {$value} is not valid, possible values: " . \implode(', ', self::getAvailableValues()),
             );
         }
     }
@@ -48,8 +48,8 @@ abstract class Enum
 
     public function equals(self $enum): bool
     {
-        if (static::class !== \get_class($enum)) {
-            throw new \Exception('Invalid enum type ' . \get_class($enum) . ', expected ' . static::class);
+        if (static::class !== $enum::class) {
+            throw new \Exception('Invalid enum type ' . $enum::class . ', expected ' . static::class);
         }
 
         return $this->equalsValue($enum->getValue());

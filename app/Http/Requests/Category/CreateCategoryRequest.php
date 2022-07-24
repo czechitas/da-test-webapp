@@ -10,8 +10,7 @@ use Illuminate\Validation\Rules\In;
 
 class CreateCategoryRequest extends FormRequest
 {
-    /** @var CategoryService */
-    private $categoryService;
+    private CategoryService $categoryService;
 
     public function __construct(CategoryService $categoryService)
     {

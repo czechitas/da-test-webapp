@@ -1,5 +1,5 @@
 # Údaje o kurzu a žákovi
-@component('mail::table')
+@component('mail::table', ['twoColumns' => true])
 | Jméno dítěte              | {{ $student->name }} |
 | -----: |:-----|
 | **Termín kurzu**          | {{ $student->term->term_range }}<br>{{ $student->term->category->name }} |

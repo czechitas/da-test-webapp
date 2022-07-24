@@ -22,11 +22,9 @@ class ExcelExportService
     public const COLOR_OVER_PAID        = 'c0ffa6';
     public const COLOR_NOT_PAID         = 'f9ebff';
 
-    /** @var ?Spreadsheet */
-    protected $spreadsheet = null;
+    protected ?Spreadsheet $spreadsheet = null;
 
-    /** @var StudentService */
-    private $studentService;
+    private StudentService $studentService;
 
     public function __construct(StudentService $studentService)
     {
@@ -136,7 +134,7 @@ class ExcelExportService
         Collection $students,
         int $row,
         string $startCell = 'B',
-        string $endCell = 'H'
+        string $endCell = 'H',
     ): void {
         foreach ($students as $student) {
             $notes = [];
@@ -168,9 +166,7 @@ class ExcelExportService
         $students = $this->studentService
             ->getListOfOverUnderPaid($termStart, $termEnd)
             ->get()
-            ->filter(static function ($value) {
-                return $value->price_to_pay != 0;
-            })->sortBy('price_to_pay');
+            ->filter(static fn ($value) => $value->price_to_pay !== 0)->sortBy('price_to_pay');
 
         $sheet = $this->getSheet();
 
@@ -188,7 +184,7 @@ class ExcelExportService
         $sheet->getCell('D1')->setValue(\sprintf(
             'Období: %s - %s',
             $termStart->format('d.m.Y'),
-            $termEnd->format('d.m.Y')
+            $termEnd->format('d.m.Y'),
         ));
 
         $sheet->getCell('B2')->setValue('Jméno');

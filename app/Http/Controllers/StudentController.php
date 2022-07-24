@@ -25,23 +25,19 @@ class StudentController extends Controller implements RedirectBackContract
 {
     use RedirectBack;
 
-    /** @var StudentService */
-    private $studentService;
+    private StudentService $studentService;
 
-    /** @var BreadcrumbService */
-    private $breadcrumbService;
+    private BreadcrumbService $breadcrumbService;
 
-    /** @var TermService */
-    private $termService;
+    private TermService $termService;
 
-    /** @var SendEmailService */
-    private $sendEmailService;
+    private SendEmailService $sendEmailService;
 
     public function __construct(
         StudentService $studentService,
         BreadcrumbService $breadcrumbService,
         TermService $termService,
-        SendEmailService $sendEmailService
+        SendEmailService $sendEmailService,
     ) {
         $this->studentService = $studentService;
         $this->breadcrumbService = $breadcrumbService;
@@ -86,7 +82,7 @@ class StudentController extends Controller implements RedirectBackContract
      */
     public function createForm(Category $category): View
     {
-        if ($category->parent_id == null) {
+        if ($category->parent_id === null) {
             \abort(404);
         }
         $this->authorize('create', Student::class);

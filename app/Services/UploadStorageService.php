@@ -56,7 +56,7 @@ class UploadStorageService
      *
      * @return string|false       Path of stored file
      */
-    public static function storeUploadedFile(UploadedFile $file, string $path, ?string $name = null)
+    public static function storeUploadedFile(UploadedFile $file, string $path, ?string $name = null): string|false
     {
         if (empty($name)) {
             return $file->store($path, self::getDisk());

@@ -32,19 +32,16 @@ class StudentController extends Controller implements RedirectBackContract
 {
     use RedirectBack;
 
-    /** @var StudentService */
-    private $studentService;
+    private StudentService $studentService;
 
-    /** @var BreadcrumbService */
-    private $breadcrumbService;
+    private BreadcrumbService $breadcrumbService;
 
-    /** @var TermService */
-    private $termService;
+    private TermService $termService;
 
     public function __construct(
         StudentService $studentService,
         BreadcrumbService $breadcrumbService,
-        TermService $termService
+        TermService $termService,
     ) {
         $this->studentService = $studentService;
         $this->breadcrumbService = $breadcrumbService;
@@ -76,31 +73,31 @@ class StudentController extends Controller implements RedirectBackContract
                 /** @var Builder<Student> $query */
                 $query->withPaymentSum();
             })
-            ->addColumn((new Column('surname', null, 'name'))->printCallback(static function (Student $student) {
-                return "{$student->surname} {$student->forename}";
-            })->orderCallback(static function (Builder $query, $dir): void {
-                /** @var Builder<Student> $query */
-                $query->orderBy('surname', $dir)->orderBy('forename', $dir);
-            }))
+            ->addColumn(
+                (new Column('surname', null, 'name'))->printCallback(
+                    static fn (Student $student) => "{$student->surname} {$student->forename}",
+                )->orderCallback(
+                    static function (Builder $query, $dir): void {
+                        /** @var Builder<Student> $query */
+                        $query->orderBy('surname', $dir)->orderBy('forename', $dir);
+                    },
+                ),
+            )
             ->addColumn((new Column('forename'))->noOrder()->notInTable())
             ->addColumn((new Column('term.term_range'))->search(null))
             ->addColumn((new Column('term_id'))->onlyExtra())
             ->addColumn((new Column('payment'))
                 ->search(null)
-                ->printCallback(static function (Student $student, $value) {
-                    return \trans('students.payments.' . $value ?? 'none');
-                }))
+                ->printCallback(
+                    static fn (Student $student, $value) => \trans('students.payments.' . ($value ?? 'none'))
+                ))
             ->addColumn((new Column('price_to_pay'))
                 ->noDB()
-                ->printCallback(static function (Student $student, $price) {
-                    return \formatPrice($price);
-                }))
+                ->printCallback(static fn (Student $student, $price) => \formatPrice($price)))
             ->addColumn((new Column('rowClass'))
                 ->noDB()
                 ->onlyExtra()
-                ->printCallback(static function (Student $student) {
-                    return \studentListClass($student);
-                }))
+                ->printCallback(static fn (Student $student) => \studentListClass($student)))
             ->addColumn((new Column('parent_name'))->notInData()->noOrder()) // Do search
             ->addColumn((new Column('birthday'))->notInData()->dateSearch('%d.%m.%Y')->noOrder())
             ->addColumn((new Column('birthday'))->notInData()->dateSearch('%e.%c.%Y')->noOrder())
@@ -226,9 +223,9 @@ class StudentController extends Controller implements RedirectBackContract
         $this->studentService->setContext($student)->updateLogout($request->getData());
         Alert::success(
             \trans(
-                'students.logout.flash_' . ($student->logged_out == null ? 'isnot' : $student->logged_out),
-                ['name' => $student->name]
-            )
+                'students.logout.flash_' . ($student->logged_out ?? 'isnot'),
+                ['name' => $student->name],
+            ),
         )->flash();
 
         return \redirect()->route('admin.students.show', $student);
@@ -241,8 +238,8 @@ class StudentController extends Controller implements RedirectBackContract
         Alert::success(
             \trans(
                 'students.cancel.flash_' . ($student->canceled ? 'is' : 'isnot'),
-                ['name' => $student->name]
-            )
+                ['name' => $student->name],
+            ),
         )->flash();
 
         return \redirect()->route('admin.students.show', $student);

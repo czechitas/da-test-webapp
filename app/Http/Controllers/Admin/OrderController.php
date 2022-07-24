@@ -15,7 +15,6 @@ use CzechitasApp\Modules\AjaxDataTables\DataTable;
 use CzechitasApp\Modules\AjaxDataTables\TableColumns;
 use CzechitasApp\Services\BreadcrumbService;
 use CzechitasApp\Services\Models\OrderService;
-use CzechitasApp\Services\Models\UserService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Prologue\Alerts\Facades\Alert;
@@ -25,18 +24,11 @@ class OrderController extends NoAdminOrderController implements RedirectBackCont
 {
     use RedirectBack;
 
-    /** @var UserService */
-    private $userService;
-
-    public function __construct(
-        BreadcrumbService $breadcrumbService,
-        OrderService $orderService,
-        UserService $userService
-    ) {
+    public function __construct(BreadcrumbService $breadcrumbService, OrderService $orderService)
+    {
         parent::__construct($breadcrumbService, $orderService);
 
         $breadcrumbService->addLevel('admin.orders.index', \trans('orders.breadcrumbs.index'));
-        $this->userService = $userService;
     }
 
     /**
@@ -59,9 +51,7 @@ class OrderController extends NoAdminOrderController implements RedirectBackCont
             ->addColumn((new Column('flag'))->search(null))
             ->addColumn((new Column('flag', null, 'flag_icon'))
                 ->onlyExtra()
-                ->printCallback(static function (Order $order) {
-                    return \config('czechitas.flags.' . ($order->flag ?: 'default'));
-                }))
+                ->printCallback(static fn (Order $order) => \config('czechitas.flags.' . ($order->flag ?: 'default'))))
             ->addColumn((new Column('client')))
             ->addColumn((new Column('contact_name')))
             ->addColumn((new Column('signature_date'))->search(null)->printCallback(static function (Order $model) {
@@ -71,9 +61,11 @@ class OrderController extends NoAdminOrderController implements RedirectBackCont
 
                 return null;
             }))
-            ->addColumn((new Column('type'))->search(null)->printCallback(static function (Order $model) {
-                return \trans('orders.type.short.' . $model->type);
-            }))
+            ->addColumn(
+                (new Column('type'))->search(null)->printCallback(
+                    static fn (Order $model) => \trans('orders.type.short.' . $model->type)
+                ),
+            )
             ->addColumn((new Column('contact_tel'))->notInTable())
             ->addColumn((new Column('contact_mail'))->notInTable())
             ->addColumn((new Column('ico'))->notInData()->noOrder()) // search only

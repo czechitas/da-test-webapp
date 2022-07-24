@@ -11,9 +11,8 @@ class Authenticate extends Middleware
     /**
      * Get the path the user should be redirected to when they are not authenticated.
      *
-     * @param         Request|mixed $request
-     * @return        string|mixed
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @param  Request|mixed $request
+     * @return string|mixed
      */
     protected function redirectTo($request)
     {

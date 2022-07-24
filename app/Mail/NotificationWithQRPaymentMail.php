@@ -12,17 +12,19 @@ class NotificationWithQRPaymentMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /** @var string */
-    private $mdView;
+    private string $mdView;
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+     */
     public $subject;
 
     /** @var mixed[] */
-    private $mdData;
+    private array $mdData;
 
-    /** @var bool */
-    private $showQRPayment;
+    private bool $showQRPayment;
 
     /**
      * Create a new message instance.

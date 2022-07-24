@@ -28,7 +28,7 @@ class ProfileController extends Controller
 
         return \response()->json(
             \array_merge($user->toArray(), ['access_token' => $user->access_token]),
-            Response::HTTP_CREATED
+            Response::HTTP_CREATED,
         );
     }
 

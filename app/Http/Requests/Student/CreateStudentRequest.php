@@ -13,11 +13,9 @@ use Illuminate\Validation\Validator;
 
 class CreateStudentRequest extends FormRequest
 {
-    /** @var TermService */
-    protected $termService;
+    protected TermService $termService;
 
-    /** @var Term|null */
-    protected $term = null;
+    protected ?Term $term = null;
 
     public function __construct(TermService $termService)
     {
@@ -92,7 +90,7 @@ class CreateStudentRequest extends FormRequest
             'restrictions.required_if' => \trans('validation.required'),
             'birthday.before_or_equal' => \trans(
                 'students.form.validation.birthday_min_age',
-                ['years' => \config('czechitas.student.minimum_age_term_starts')]
+                ['years' => \config('czechitas.student.minimum_age_term_starts')],
             ),
         ];
     }

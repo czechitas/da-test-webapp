@@ -25,19 +25,16 @@ class UserController extends Controller implements RedirectBackContract
 {
     use RedirectBack;
 
-    /** @var BreadcrumbService */
-    private $breadcrumbService;
+    private BreadcrumbService $breadcrumbService;
 
-    /** @var UserService */
-    private $userService;
+    private UserService $userService;
 
-    /** @var StudentService */
-    private $studentService;
+    private StudentService $studentService;
 
     public function __construct(
         BreadcrumbService $breadcrumbService,
         UserService $userService,
-        StudentService $studentService
+        StudentService $studentService,
     ) {
         $this->breadcrumbService = $breadcrumbService;
         $this->userService = $userService;
@@ -62,9 +59,11 @@ class UserController extends Controller implements RedirectBackContract
         $columns = (new TableColumns($this->userService->getListQuery()))
             ->addColumn((new Column('name')))
             ->addColumn((new Column('email')))
-            ->addColumn((new Column('role'))->search(null)->printCallback(static function (User $model) {
-                return \trans('users.role.' . $model->role);
-            }))
+            ->addColumn(
+                (new Column('role'))->search(null)->printCallback(
+                    static fn (User $model) => \trans('users.role.' . $model->role)
+                ),
+            )
             ->addColumn((new Column('is_blocked'))->onlyExtra())
             ->addPolicies(['view', 'update', 'delete', 'unblock']);
 

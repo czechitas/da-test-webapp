@@ -13,7 +13,7 @@ Kurz je uhrazen v plné výši. Není potřeba žádné další kroky
 @elseif($student->payment == \CzechitasApp\Models\Enums\StudentPaymentType::FKSP) {{-- PAYMENT_TYPE --}}
 **Způsob platby: FKSP**
 @else {{-- PAYMENT_TYPE --}}
-@component('mail::table')
+@component('mail::table', ['twoColumns' => true])
 | Způsob platby         | @lang('students.payments.'.$student->payment) |
 | -----: |:-----|
 | **Číslo účtu**        | 199488012/1234 - Kočičí banka |

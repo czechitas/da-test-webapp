@@ -15,11 +15,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class OrderController extends Controller
 {
-    /** @var BreadcrumbService */
-    protected $breadcrumbService;
+    protected BreadcrumbService $breadcrumbService;
 
-    /** @var OrderService */
-    protected $orderService;
+    protected OrderService $orderService;
 
     public function __construct(BreadcrumbService $breadcrumbService, OrderService $orderService)
     {
@@ -35,7 +33,7 @@ class OrderController extends Controller
         $this->breadcrumbService->addLevel('orders.create', \trans('orders.breadcrumbs.create'));
 
         return \view(
-            \session()->has('orderStored') ? 'orders.success' : 'orders.create'
+            \session()->has('orderStored') ? 'orders.success' : 'orders.create',
         );
     }
 

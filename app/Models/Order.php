@@ -181,7 +181,7 @@ class Order extends BaseModel
             return $this->final_date_from->format('d.m.Y');
         }
         $final_date_from = $this->final_date_from->format('d.m.');
-        if ($this->final_date_from->year != $this->final_date_to->year) {
+        if ($this->final_date_from->year !== $this->final_date_to->year) {
             $final_date_from .= $this->final_date_from->year;
         }
         $final_date_to = $this->final_date_to->format('d.m.Y');

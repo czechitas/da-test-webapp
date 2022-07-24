@@ -72,30 +72,24 @@ class Term extends BaseModel
 
     /**
      * Term admin relationship builder
-     *
-     * @return User|BelongsTo
      */
-    public function admin()
+    public function admin(): User|BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
     /**
      * Category relationship builder
-     *
-     * @return Category|BelongsTo
      */
-    public function category()
+    public function category(): Category|BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
     /**
      * Students relationship builder
-     *
-     * @return Student|HasMany
      */
-    public function students()
+    public function students(): Student|HasMany
     {
         return $this->hasMany(Student::class);
     }
@@ -113,7 +107,7 @@ class Term extends BaseModel
             $termRange = $this->start->format('d.m.Y');
         } else {
             $start = $this->start->format('d.m.');
-            if ($this->start->year != $this->end->year) {
+            if ($this->start->year !== $this->end->year) {
                 $start .= $this->start->year;
             }
             $end = $this->end->format('d.m.Y');

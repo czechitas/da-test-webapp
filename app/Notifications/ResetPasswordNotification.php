@@ -9,8 +9,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 
 class ResetPasswordNotification extends BaseQueueableNotification
 {
-    /** @var string */
-    private $token;
+    private string $token;
 
     public function __construct(string $token)
     {

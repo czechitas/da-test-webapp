@@ -16,7 +16,7 @@ class HttpsMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (\config('https.enable') == true) {
+        if (\config('https.enable') === true) {
             if (!$request->secure()) {
                 return \redirect()->secure($request->getRequestUri(), 301);
             }

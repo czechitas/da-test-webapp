@@ -47,20 +47,16 @@ class StudentPayment extends BaseModel
 
     /**
      * Student relationship builder
-     *
-     * @return Student|BelongsTo
      */
-    public function student()
+    public function student(): Student|BelongsTo
     {
         return $this->belongsTo(Student::class);
     }
 
     /**
      * User (author) relationship builder
-     *
-     * @return User|BelongsTo
      */
-    public function user()
+    public function user(): User|BelongsTo
     {
         return $this->belongsTo(User::class);
     }

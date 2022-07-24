@@ -12,5 +12,5 @@ class BaseQueueableNotification extends BaseNotification implements ShouldQueue
     use Queueable;
 
     /** @var int Retry after 180s to prevent errors when Mailgun is down */
-    public $backoff = 180;
+    public int $backoff = 180;
 }

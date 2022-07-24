@@ -8,8 +8,7 @@ use CzechitasApp\Models\Student;
 
 class StudentAdminUpdatedNotification extends StudentBaseNotification
 {
-    /** @var string */
-    protected $action;
+    protected string $action;
 
     public function __construct(Student $student, string $action)
     {

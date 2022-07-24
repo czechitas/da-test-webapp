@@ -53,7 +53,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if (\app()->getLocale() == 'cs') {
+        if (\app()->getLocale() === 'cs') {
             Route::resourceVerbs([
                 'create' => 'pridat',
                 'edit' => 'upravit',

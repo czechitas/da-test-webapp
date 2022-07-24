@@ -25,7 +25,7 @@ class CategoryPolicy
      */
     public function view(User $user, Category $category): bool
     {
-        return false;// Not used actually ever
+        return false; // Not used actually ever
     }
 
     /**
@@ -52,11 +52,11 @@ class CategoryPolicy
         if (!$user->isAdminOrMore()) {
             return false;
         }
-        $childrenCount = (int)$category->children_count ?? $category->children()->count();
+        $childrenCount = $category->children_count ?? $category->children()->count();
         if ($childrenCount > 0) {
             return false;
         }
-        $termsCount = (int)$category->total_terms_count ?? $category->terms()->withTrashed()->count();
+        $termsCount = $category->total_terms_count ?? $category->terms()->withTrashed()->count();
 
         return $termsCount <= 0;
     }

@@ -46,30 +46,24 @@ class Category extends BaseModel
 
     /**
      * Parent relationship builder
-     *
-     * @return self|BelongsTo
      */
-    public function parent()
+    public function parent(): self|BelongsTo
     {
         return $this->belongsTo(self::class, 'parent_id');
     }
 
     /**
      * Subcategories relationship builder
-     *
-     * @return self|HasMany
      */
-    public function children()
+    public function children(): self|HasMany
     {
         return $this->hasMany(self::class, 'parent_id');
     }
 
     /**
      * Terms relationship builder
-     *
-     * @return Term|HasMany
      */
-    public function terms()
+    public function terms(): Term|HasMany
     {
         return $this->hasMany(Term::class);
     }

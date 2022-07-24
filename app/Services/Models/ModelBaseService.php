@@ -9,8 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 abstract class ModelBaseService
 {
-    /** @var BaseModel|null */
-    protected $context = null;
+    protected ?BaseModel $context = null;
 
     /**
      * Get FQCN category model
@@ -30,7 +29,7 @@ abstract class ModelBaseService
      *
      * @return static
      */
-    public function setContext(BaseModel $context)
+    public function setContext(BaseModel $context): static
     {
         $this->context = $context;
 

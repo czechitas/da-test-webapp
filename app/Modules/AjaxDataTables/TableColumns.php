@@ -12,24 +12,23 @@ use Illuminate\Support\Facades\Auth;
 
 class TableColumns
 {
-    /** @var Builder */
-    protected $model;
+    protected Builder $model;
 
     /** @var array<Column> */
-    protected $columns;
+    protected array $columns;
 
     /** @var array<int|string, Closure> */
-    protected $queryCallback = [];
+    protected array $queryCallback = [];
 
      /** @var bool Select all columns from DB instead of only needed */
-    public $selectAllColumns;
+    public bool $selectAllColumns;
 
     /**
      *
      * @param Builder|string $model            Pass builder or FQCN of model
      * @param bool           $selectAllColumns Select all columns from DB instead of only needed
      */
-    public function __construct($model, bool $selectAllColumns = false)
+    public function __construct(Builder|string $model, bool $selectAllColumns = false)
     {
         if (\is_string($model)) {
             $model = $model::query();
@@ -50,10 +49,8 @@ class TableColumns
 
     /**
      * Add callback with query parameter before passing to Builder
-     *
-     * @param int|string|null $relation
      */
-    public function addQueryCallback(Closure $callback, $relation = null): self
+    public function addQueryCallback(Closure $callback, int|string|null $relation = null): self
     {
         $this->queryCallback[$relation ?? 0] = $callback;
 
@@ -81,7 +78,7 @@ class TableColumns
                     }
 
                     return $policies;
-                })
+                }),
         );
 
         return $this;
@@ -103,7 +100,7 @@ class TableColumns
      */
     public function getRelationColumns(?string $relation = null): array
     {
-        if ($relation == '*') {
+        if ($relation === '*') {
             return $this->columns;
         }
         $columns = [];
@@ -182,9 +179,7 @@ class TableColumns
     public function getNthVisibleTableColumn(int $index, ?string $relation = null): ?Column
     {
         $nthVisibleColumn = \collect($this->getSelectColumns(false, '*'))
-            ->filter(static function (Column $column) {
-                return $column->inTable;
-            })
+            ->filter(static fn (Column $column) => $column->inTable)
             ->values()
             ->get($index);
 
@@ -200,10 +195,8 @@ class TableColumns
 
     /**
      * Call set callbacks
-     *
-     * @param Builder|Relation $query
      */
-    public function callCallback($query, ?string $relation = null): void
+    public function callCallback(Builder|Relation $query, ?string $relation = null): void
     {
         $relation = $relation ?? 0;
         if (!isset($this->queryCallback[$relation])) {

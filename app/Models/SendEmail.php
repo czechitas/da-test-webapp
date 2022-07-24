@@ -51,10 +51,8 @@ class SendEmail extends BaseModel
 
     /**
      * Student relationship builder
-     *
-     * @return Student|BelongsTo
      */
-    public function student()
+    public function student(): Student|BelongsTo
     {
         return $this->belongsTo(Student::class);
     }

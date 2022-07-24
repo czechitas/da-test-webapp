@@ -16,11 +16,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class NewsController extends Controller
 {
-    /** @var NewsService */
-    private $newsService;
+    private NewsService $newsService;
 
-    /** @var BreadcrumbService */
-    private $breadcrumbService;
+    private BreadcrumbService $breadcrumbService;
 
     public function __construct(NewsService $newsService, BreadcrumbService $breadcrumbService)
     {

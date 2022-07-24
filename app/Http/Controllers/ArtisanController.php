@@ -21,10 +21,10 @@ class ArtisanController extends Controller
      */
     public function errorHandler(int $errno, string $errstr, string $errfile, int $errline)
     {
-        if ($errno == 2 && \preg_match('/putenv\(\)/i', $errstr)) {
+        if ($errno === 2 && \preg_match('/putenv\(\)/i', $errstr)) {
             return true;
         }
-        if ($this->previousErrorHandler != null) {
+        if ($this->previousErrorHandler !== null) {
             return \call_user_func($this->previousErrorHandler, $errno, $errstr, $errfile, $errline);
         }
 
@@ -35,7 +35,7 @@ class ArtisanController extends Controller
      * @param string|array<mixed> $command
      * @param array<mixed>|null   $parameters
      */
-    protected function callArtisan($command, ?array $parameters = [], bool $isCron = false): Response
+    protected function callArtisan(string|array $command, ?array $parameters = [], bool $isCron = false): Response
     {
         if ($this->previousErrorHandler === false) {
             $this->previousErrorHandler = \set_error_handler([$this, 'errorHandler']);
@@ -112,7 +112,7 @@ class ArtisanController extends Controller
     {
         return $this->callArtisan(
             'down',
-            ['--render' => 'errors.503', '--retry' => 60, '--secret' => \config('app.artisan_key')]
+            ['--render' => 'errors.503', '--retry' => 60, '--secret' => \config('app.artisan_key')],
         );
     }
 
@@ -135,7 +135,7 @@ class ArtisanController extends Controller
                 '--sansdaemon' => true,
                 '--queue' => 'password,job,default',
             ],
-            true
+            true,
         );
     }
 

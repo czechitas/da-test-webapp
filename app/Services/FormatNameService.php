@@ -9,8 +9,7 @@ use Vokativ\Name;
 
 class FormatNameService
 {
-    /** @var Name */
-    private $nameLib;
+    private Name $nameLib;
 
     public function __construct(Name $nameLib)
     {

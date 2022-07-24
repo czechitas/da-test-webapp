@@ -15,22 +15,26 @@
     <arg value="p"/><!-- Display progress in report -->
     <arg value="s"/><!-- Display sniff codes in report -->
 
-    <rule ref="./vendor/arxeiss/coding-standards/Rules/phpcs-spaces.xml">
-        <!-- trailing comma in function call is supported in PHP 7.3 and above, exclude if needed -->
-        <exclude name="SlevomatCodingStandard.Functions.TrailingCommaInCall"/>
-    </rule>
+    <rule ref="./vendor/arxeiss/coding-standards/Rules/phpcs-spaces.xml" />
 
     <!-- Add set of strict rules if needed -->
     <rule ref="./vendor/arxeiss/coding-standards/Rules/phpcs-strict.xml">
         <exclude name="Squiz.Strings.DoubleQuoteUsage.ContainsVar"/>
-        <exclude name="SlevomatCodingStandard.Operators.DisallowEqualOperators"/>
-        <!-- Supported in PHP 7.4+, ignore for now -->
-        <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint"/>
+
+        <exclude name="SlevomatCodingStandard.Files.FileLength.FileTooLong"/>
+        <exclude name="SlevomatCodingStandard.Classes.ClassLength.ClassTooLong"/>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Functions.RequireArrowFunction"/>
+
+    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint">
+        <exclude-pattern>app/Console</exclude-pattern>
+        <exclude-pattern>app/Http/Kernel.php</exclude-pattern>
+        <exclude-pattern>app/Exceptions/Handler.php</exclude-pattern>
+        <exclude-pattern>app/Http/Middleware</exclude-pattern>
+        <exclude-pattern>app/Models/*.php</exclude-pattern>
+        <exclude-pattern>app/Providers</exclude-pattern>
     </rule>
 
-    <rule ref="Generic.CodeAnalysis.EmptyStatement">
-        <type>warning</type>
-    </rule>
     <rule ref="Squiz.PHP.CommentedOutCode.Found">
         <exclude-pattern>./config</exclude-pattern>
     </rule>

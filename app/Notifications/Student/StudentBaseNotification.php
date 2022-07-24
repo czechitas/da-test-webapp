@@ -5,21 +5,19 @@ declare(strict_types=1);
 namespace CzechitasApp\Notifications\Student;
 
 use CzechitasApp\Mail\NotificationWithQRPaymentMail;
+use CzechitasApp\Mail\Symfony\DataPart;
 use CzechitasApp\Models\Student;
 use CzechitasApp\Notifications\BaseQueueableNotification;
 use CzechitasApp\Services\Models\StudentService;
-use Swift_Image;
+use Symfony\Component\Mime\Email;
 
 abstract class StudentBaseNotification extends BaseQueueableNotification
 {
-    /** @var Student */
-    protected $student;
+    protected Student $student;
 
-    /** @var StudentService */
-    protected $studentService;
+    protected StudentService $studentService;
 
-    /** @var bool */
-    protected $addQRPayment = false;
+    protected bool $addQRPayment = false;
 
     public function __construct(Student $student)
     {
@@ -68,7 +66,7 @@ abstract class StudentBaseNotification extends BaseQueueableNotification
             $this->getTemplateView(),
             \mailSubject($this->getSubject()),
             $this->getData(),
-            $this->shouldAddQRPayment()
+            $this->shouldAddQRPayment(),
         );
     }
 
@@ -95,15 +93,15 @@ abstract class StudentBaseNotification extends BaseQueueableNotification
         if ($notificationMail->shouldAddQRPayment()) {
             $qrCode = $this->studentService->getQRPayment();
 
-            $message->withSwiftMessage(static function ($message) use ($qrCode): void {
-                $image = new Swift_Image($qrCode->toPngText(), 'QR Platba.png', 'image/png');
-                $image->setId('qrpayment@czechitasapp.generated');
-                $message->embed($image);
+            $message->withSymfonyMessage(static function (Email $symfonyMessage) use ($qrCode): void {
+                $image = new DataPart($qrCode->toPngText(), 'QR Platba.png', 'image/png');
+                $image->setContentId('qrpayment@czechitasapp.generated');
+                $symfonyMessage->attachPart($image);
             });
         }
 
         // Add Mailgun header about student
-        $message->withSwiftMessage(function ($message): void {
+        $message->withSymfonyMessage(function ($message): void {
             $message->getHeaders()->addTextHeader('X-Mailgun-Variables', \json_encode($this->getMailgunVariables()));
         });
 

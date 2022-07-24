@@ -17,16 +17,14 @@ use Illuminate\View\View;
 
 class ExportController extends Controller
 {
-    /** @var ExcelExportService */
-    private $exportService;
+    private ExcelExportService $exportService;
 
-    /** @var TermService */
-    private $termService;
+    private TermService $termService;
 
     public function __construct(
         ExcelExportService $exportService,
         BreadcrumbService $breadcrumbService,
-        TermService $termService
+        TermService $termService,
     ) {
         $this->exportService = $exportService;
         $breadcrumbService->addLevel('admin.exports.index', \trans('exports.title'));
@@ -78,8 +76,8 @@ class ExportController extends Controller
         $this->validateTermRequest($request, 'full_term');
         $this->exportService->fullTermExport(
             $this->termService->findTermOrFail(
-                (int)$request->input('full_term.term_id')
-            )
+                (int)$request->input('full_term.term_id'),
+            ),
         )->sendToBrowser('Termín.xlsx');
     }
 
@@ -90,7 +88,7 @@ class ExportController extends Controller
         $this->validateDateRequest($request, 'over_under_paid');
         $this->exportService->exportOverUnderPaid(
             \getCarbon($request->input('over_under_paid.start')),
-            \getCarbon($request->input('over_under_paid.end'))
+            \getCarbon($request->input('over_under_paid.end')),
         )->sendToBrowser('Přeplatky a nedoplatky.xlsx');
     }
 }

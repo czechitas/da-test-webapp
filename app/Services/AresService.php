@@ -13,11 +13,9 @@ class AresService
 {
     public const ARES_ICO_URL = 'https://wwwinfo.mfcr.cz/cgi-bin/ares/darv_std.cgi?ico=%d';
 
-    /** @var Client */
-    private $client;
+    private Client $client;
 
-    /** @var DOMXPath */
-    private $finder;
+    private DOMXPath $finder;
 
     public function __construct(Client $client)
     {
@@ -29,7 +27,7 @@ class AresService
      *
      * @return array<string, string>|false|null
      */
-    public function loadCompanyInfoByICO(string $ico)
+    public function loadCompanyInfoByICO(string $ico): array|false|null
     {
         $data = null;
         try {

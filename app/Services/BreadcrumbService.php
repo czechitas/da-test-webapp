@@ -9,7 +9,7 @@ use Illuminate\Contracts\Support\Arrayable;
 class BreadcrumbService implements Arrayable
 {
     /** @var array<array<string, mixed>> */
-    private $breadcrumbs = [];
+    private array $breadcrumbs = [];
 
     public function __construct(?string $route = null, ?string $text = null)
     {

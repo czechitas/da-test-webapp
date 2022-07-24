@@ -17,7 +17,7 @@ class VariableSymbolService
             $baseId,
             self::MIN_ID_LENGTH,
             self::PREPEND_NUMBER,
-            self::PREPEND_NOT_MODULO_NUMBER
+            self::PREPEND_NOT_MODULO_NUMBER,
         );
     }
 
@@ -31,7 +31,7 @@ class VariableSymbolService
                 '%d%d%s',
                 $prepend,
                 $prependNotModulo,
-                $formattedId
+                $formattedId,
             ));
         }
 
@@ -43,7 +43,8 @@ class VariableSymbolService
         // Only 9 pad - last one is parity
         $padded = \str_pad($formattedId, 9, '0', \STR_PAD_LEFT);
         $checkSum = 0;
-        for ($i = 0; $i < \strlen($padded); $i += 1) {
+        $paddedLength = \strlen($padded);
+        for ($i = 0; $i < $paddedLength; $i += 1) {
             $checkSum += self::WEIGHTS[$i] * (int)$padded[$i];
         }
         $remain = $checkSum % 11;
@@ -66,7 +67,8 @@ class VariableSymbolService
 
         // Check main part
         $checkSum = 0;
-        for ($i = 0; $i < \strlen($variableSymbol); $i += 1) {
+        $variableSymbolLength = \strlen($variableSymbol);
+        for ($i = 0; $i < $variableSymbolLength; $i += 1) {
             $checkSum += self::WEIGHTS[$i] * (int)$variableSymbol[$i];
         }
 

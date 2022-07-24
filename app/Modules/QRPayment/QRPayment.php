@@ -6,27 +6,36 @@ namespace CzechitasApp\Modules\QRPayment;
 
 use BaconQrCode\Common\ErrorCorrectionLevel;
 use BaconQrCode\Encoder\Encoder;
-use BaconQrCode\Renderer\Image\Png;
+use BaconQrCode\Renderer\Color\Alpha;
+use BaconQrCode\Renderer\Color\Rgb;
+use BaconQrCode\Renderer\Image\GDImageBackEnd;
+use BaconQrCode\Renderer\Image\ImageBackEndInterface;
+use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
+use BaconQrCode\Renderer\Image\SvgImageBackEnd;
+use BaconQrCode\Renderer\ImageRenderer;
+use BaconQrCode\Renderer\Module\ModuleInterface;
+use BaconQrCode\Renderer\Module\RoundnessModule;
+use BaconQrCode\Renderer\Module\SquareModule;
+use BaconQrCode\Renderer\RendererStyle\Fill;
+use BaconQrCode\Renderer\RendererStyle\Gradient;
+use BaconQrCode\Renderer\RendererStyle\GradientType;
+use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
 use Illuminate\Support\Str;
+use Imagick;
 
 class QRPayment
 {
     /** @var array<string, string> */
-    protected $qrCodeData = [];
+    protected array $qrCodeData = [];
 
-    /**
-     * @param string|int|null $vs
-     * @param string|int|null $ks
-     * @param string|int|null $ss
-     */
     public function __construct(
         float $price,
-        $vs = null,
-        $ks = null,
-        $ss = null,
+        string|int|null $vs = null,
+        string|int|null $ks = null,
+        string|int|null $ss = null,
         ?string $msg = null,
-        ?string $bankAcc = null
+        ?string $bankAcc = null,
     ) {
         $this->qrCodeData = \array_filter([
             'ACC'   => static::bankAccToIBAN($bankAcc ?? \config('czechitas.bank_acc')),
@@ -63,24 +72,30 @@ class QRPayment
             $dataToJoin[] = Str::upper($key) . ':' . $value;
         }
 
-        return "SP*{$version}*" . \implode('*', $dataToJoin);
+        return "SPD*{$version}*" . \implode('*', $dataToJoin);
     }
 
     /**
      * @param array<string, mixed> $settings
      */
-    public function toPngText(bool $base64 = false, array $settings = []): string
-    {
+    private function toText(
+        ImageBackEndInterface $imageBackend,
+        bool $base64 = false,
+        array $settings = [],
+        ?Fill $fill = null,
+        ?ModuleInterface $module = null,
+    ): string {
         $settings = \array_merge([
-            'height'          => 400,
-            'width'           => 400,
-            'correctionLevel' => ErrorCorrectionLevel::M,
+            'size'            => 400,
+            'correctionLevel' => ErrorCorrectionLevel::M(),
             'encoding'        => Encoder::DEFAULT_BYTE_MODE_ECODING,
+            'margin'          => 4,
         ], $settings);
 
-        $renderer = new Png();
-        $renderer->setHeight($settings['height']);
-        $renderer->setWidth($settings['width']);
+        $renderer = new ImageRenderer(
+            new RendererStyle($settings['size'], $settings['margin'], $module, null, $fill),
+            $imageBackend,
+        );
         $writer = new Writer($renderer);
 
         $binary = $writer->writeString($this->getCodeContent(), $settings['encoding'], $settings['correctionLevel']);
@@ -89,6 +104,49 @@ class QRPayment
         }
 
         return $binary;
+    }
+
+    /**
+     * @param array<string, mixed> $settings
+     */
+    public function toPngText(bool $base64 = false, array $settings = []): string
+    {
+        if (\class_exists(Imagick::class)) {
+            return $this->toText(
+                new ImagickImageBackEnd(),
+                $base64,
+                $settings,
+                Fill::uniformGradient(
+                    new Alpha(0, new Rgb(0, 0, 0)),
+                    new Gradient(new Rgb(157, 0, 86), new Rgb(110, 0, 61), GradientType::VERTICAL()),
+                ),
+                SquareModule::instance(),
+            );
+        }
+
+        return $this->toText(
+            new GDImageBackEnd(),
+            $base64,
+            $settings,
+            Fill::uniformColor(new Rgb(255, 255, 255), new Rgb(157, 0, 86)),
+        );
+    }
+
+    /**
+     * @param array<string, mixed> $settings
+     */
+    public function toSvgText(bool $base64 = false, array $settings = []): string
+    {
+        return $this->toText(
+            new SvgImageBackEnd(),
+            $base64,
+            $settings,
+            Fill::uniformGradient(
+                new Alpha(0, new Rgb(0, 0, 0)),
+                new Gradient(new Rgb(139, 58, 58), new Rgb(111, 34, 34), GradientType::VERTICAL()),
+            ),
+            new RoundnessModule(0.5),
+        );
     }
 
     public static function bankAccToIBAN(string $bankAcc): string
@@ -110,7 +168,7 @@ class QRPayment
             (string)(98 - (int)\bcmod("{$bankCode}{$prefix}{$main}123500", '97')),
             2,
             '0',
-            \STR_PAD_LEFT
+            \STR_PAD_LEFT,
         );
 
         return "CZ{$controllNumber}{$bankCode}{$prefix}{$main}";

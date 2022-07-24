@@ -17,11 +17,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class CategoryController extends Controller
 {
-    /** @var BreadcrumbService */
-    private $breadcrumbService;
+    private BreadcrumbService $breadcrumbService;
 
-    /** @var CategoryService */
-    private $categoryService;
+    private CategoryService $categoryService;
 
     public function __construct(BreadcrumbService $breadcrumbService, CategoryService $categoryService)
     {

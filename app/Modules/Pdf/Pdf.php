@@ -14,10 +14,9 @@ use Mpdf\Mpdf;
 class Pdf
 {
     /** @var array<string, mixed> */
-    protected $config = [];
+    protected array $config = [];
 
-    /** @var Mpdf */
-    protected $mpdf;
+    protected Mpdf $mpdf;
 
     /**
      * Load a HTML string

@@ -18,11 +18,16 @@ parameters:
 	level: 6
 	reportUnmatchedIgnoredErrors: true
 
+	# remove some day
+	checkGenericClassInNonGenericObjectType: false
+
 	ignoreErrors:
-		- '#Access to an undefined property CzechitasApp\\Models\\Category::\$imagePath#'
-		- '#isRole(Master|Admin|Parent|Or)*\(\)#' # Is magic method
+		- '#isRole(Master|Admin|BusLeader|Instructor|Teacher|Parent|Or)*\(\)#' # Is magic method
 		-
-			message: '#CzechitasApp\\Models\\[a-z]+::\$[a-z_]+_count#i' # Is added in Controllers by RelationCountColumn
-			paths:
-				- app/Policies/CategoryPolicy.php
-				- app/Policies/TermPolicy.php
+			message: '#Access to an undefined property CzechitasApp\\Models\\Category::\$imagePath#'
+			path: app/Http/Controllers/Api/CategoryController.php
+
+		# Remove in future
+		- '#Access to an undefined property Illuminate\\Routing\\Route::\$[a-z0-9]+#i'
+		- '#PHPDoc type .* of property .* is not covariant with PHPDoc type#'
+		- '#Relation .* is not found in CzechitasApp\\Models\\[a-z0-9]+ model#i'

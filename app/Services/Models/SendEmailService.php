@@ -58,7 +58,7 @@ class SendEmailService extends ModelBaseService
             Carbon::now()->format('Y-m'),
             $student->id,
             Str::slug($student->name),
-            Carbon::now()->format('Y-m-d_H-i-s.u')
+            Carbon::now()->format('Y-m-d_H-i-s.u'),
         );
     }
 

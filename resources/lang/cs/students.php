@@ -3,26 +3,26 @@
 declare(strict_types=1);
 
 return [
-    'title'                         => 'Přihlášky',
-    'title_new'                     => 'Nová přihláška',
-    'title_detail'                  => 'Žák :student',
-    'title_edit'                    => ':student - úprava',
-    'title_logout'                  => ':student - odhlášení',
-    'title_payment_import'          => 'Import plateb',
-    'title_send_emails'             => ':student - odeslané emaily',
+    'title'                => 'Přihlášky',
+    'title_new'            => 'Nová přihláška',
+    'title_detail'         => 'Žák :student',
+    'title_edit'           => ':student - úprava',
+    'title_logout'         => ':student - odhlášení',
+    'title_payment_import' => 'Import plateb',
+    'title_send_emails'    => ':student - odeslané emaily',
 
     'create_button'        => 'Vytvořit novou přihlášku',
 
     'breadcrumbs'          => [
-        'create'                => 'Nová přihláška',
-        'index'                 => 'Přihlášky',
-        'edit'                  => 'Úprava přihlášky',
-        'logout'                => 'Odhlášení',
-        'send_emails'           => 'Odeslané emaily',
+        'create'      => 'Nová přihláška',
+        'index'       => 'Přihlášky',
+        'edit'        => 'Úprava přihlášky',
+        'logout'      => 'Odhlášení',
+        'send_emails' => 'Odeslané emaily',
     ],
 
-    'created_mail_subject'  => 'Nová přihláška',
-    'updated_mail_subject'  => 'Úpravy přihlášky',
+    'created_mail_subject' => 'Nová přihláška',
+    'updated_mail_subject' => 'Úpravy přihlášky',
 
     'payments'             => [
         'transfer'          => 'Bankovní převod',
@@ -71,11 +71,11 @@ return [
 
     'certificates'         => [
         // Name and PDF title
-        'login_file'        => 'Potvrzení o přihlášení',
-        'payment_file'      => 'Potvrzení o zaplacení',
+        'login_file'       => 'Potvrzení o přihlášení',
+        'payment_file'     => 'Potvrzení o zaplacení',
 
-        'login_download'    => 'Stáhnout potvrzení o přihlášení',
-        'payment_download'  => 'Stáhnout potvrzení o zaplacení',
+        'login_download'   => 'Stáhnout potvrzení o přihlášení',
+        'payment_download' => 'Stáhnout potvrzení o zaplacení',
     ],
 
     'form'                 => [
@@ -138,7 +138,7 @@ return [
         'alternate'             => 'Náhradník',
         'alternate_yes'         => 'Mám náhradníka a vyplním jeho jméno',
 
-        'validation' => [
+        'validation'            => [
             'birthday_min_age' => 'Žák musí dovršit :years roky nejpozději v den začátku kurzu',
         ],
     ],
@@ -147,7 +147,7 @@ return [
 
     'admin_update'         => ['mail_subject' => 'Změna stavu přihlášky'],
 
-    'filled_note_or_fksp' => [
+    'filled_note_or_fksp'  => [
         'insert_mail_subject' => 'Nová přihláška s poznámkou či FKSP',
         'update_mail_subject' => 'Upravená přihláška s poznámkou či FKSP',
     ],
@@ -185,15 +185,15 @@ return [
     ],
 
     'send_emails'          => [
-        'button'           => 'Historie emailů',
+        'button'          => 'Historie emailů',
 
-        'created_at'       => 'Odesláno',
-        'to'               => 'Příjemce',
-        'subject'          => 'Předmět',
-        'action'           => 'Akce',
-        'show_content'     => 'Zobrazit obsah emailu',
+        'created_at'      => 'Odesláno',
+        'to'              => 'Příjemce',
+        'subject'         => 'Předmět',
+        'action'          => 'Akce',
+        'show_content'    => 'Zobrazit obsah emailu',
 
-        'mail_save_delay'  => 'Email se zde v seznamu může zobrazit až s 10 minutovým zpožděním od odeslání!',
+        'mail_save_delay' => 'Email se zde v seznamu může zobrazit až s 10 minutovým zpožděním od odeslání!',
     ],
 
     'warnings'             => [

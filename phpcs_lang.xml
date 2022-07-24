@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Czechitas App Custom Ruleset">
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="SunOutdoor App Custom Ruleset">
 
     <!-- Check folders -->
     <file>./resources/lang/</file>
@@ -9,23 +9,20 @@
     <arg value="p"/><!-- Display progress in report -->
     <arg value="s"/><!-- Display sniff codes in report -->
 
-    <rule ref="./vendor/arxeiss/coding-standards/Rules/phpcs-spaces.xml">
-        <exclude name="Squiz.Arrays.ArrayDeclaration"/>
-    </rule>
+    <config name="php_version" value="80000"/>
 
-    <!-- Add set of strict rules if needed -->
+    <rule ref="./vendor/arxeiss/coding-standards/Rules/phpcs-spaces.xml" />
     <rule ref="./vendor/arxeiss/coding-standards/Rules/phpcs-strict.xml">
         <exclude name="Generic.Files.LineLength.MaxExceeded"/>
+        <exclude name="SlevomatCodingStandard.Files.FileLength.FileTooLong"/>
     </rule>
 
-    <rule ref="Squiz.Arrays.ArrayDeclaration">
-        <exclude name="Squiz.Arrays.ArrayDeclaration.ValueNotAligned" />
-        <exclude name="Squiz.Arrays.ArrayDeclaration.KeyNotAligned" />
-        <!-- <exclude name="Squiz.Arrays.ArrayDeclaration.DoubleArrowNotAligned" /> -->
-        <exclude name="Squiz.Arrays.ArrayDeclaration.CloseBraceNotAligned" />
-        <!-- <exclude name="Squiz.Arrays.ArrayDeclaration.ValueNoNewline" /> -->
-        <!-- <exclude name="Squiz.Arrays.ArrayDeclaration.MultiLineNotAllowed" /> -->
-        <exclude name="Squiz.Arrays.ArrayDeclaration.SingleLineNotAllowed" />
+    <rule ref="Squiz.Arrays.ArrayDeclaration.DoubleArrowNotAligned">
+        <severity>5</severity>
+    </rule>
+    <!-- Squiz.Arrays.ArrayDeclaration.KeyNotAligned not working for nested arrays properly -->
+    <rule ref="Squiz.Arrays.ArrayDeclaration.ValueNotAligned">
+        <severity>5</severity>
     </rule>
 
 </ruleset>

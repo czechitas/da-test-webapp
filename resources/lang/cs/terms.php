@@ -15,27 +15,27 @@ return [
     ],
 
     'form'         => [
-        'category'            => 'Kategorie',
-        's_symbol'            => 'Specifický symbol',
-        'term_range'          => 'Termín konání',
-        'opening'             => 'Datum otevření přihlášek',
-        'opening_desc'        => 'Datum od kdy lze vytvářet přihlášky. Pokud je prázdné, lze ihned',
-        'opening_not_yet'     => 'Přihlašovat žáky bude možné až od',
-        'price'               => 'Cena za kurz',
-        'note_public'         => 'Poznámka',
-        'note_private'        => 'Soukromá poznámka',
+        'category'        => 'Kategorie',
+        's_symbol'        => 'Specifický symbol',
+        'term_range'      => 'Termín konání',
+        'opening'         => 'Datum otevření přihlášek',
+        'opening_desc'    => 'Datum od kdy lze vytvářet přihlášky. Pokud je prázdné, lze ihned',
+        'opening_not_yet' => 'Přihlašovat žáky bude možné až od',
+        'price'           => 'Cena za kurz',
+        'note_public'     => 'Poznámka',
+        'note_private'    => 'Soukromá poznámka',
 
-        'optional'            => 'Pole je nepovinné',
-        'created_at'          => 'Vytvořen',
-        'submit_create'       => 'Vytvořit termín',
-        'submit_update'       => 'Uložit termín',
+        'optional'        => 'Pole je nepovinné',
+        'created_at'      => 'Vytvořen',
+        'submit_create'   => 'Vytvořit termín',
+        'submit_update'   => 'Uložit termín',
 
     ],
 
     'success'      => [
-        'flash_create'          => 'Termín :date byl úspěšně vytvořen',
-        'flash_update'          => 'Termín :date byl úspěšně upraven',
-        'flash_delete'          => 'Termín :date byl smazán',
+        'flash_create' => 'Termín :date byl úspěšně vytvořen',
+        'flash_update' => 'Termín :date byl úspěšně upraven',
+        'flash_delete' => 'Termín :date byl smazán',
     ],
 
     // Table

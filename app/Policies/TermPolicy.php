@@ -74,7 +74,7 @@ class TermPolicy
     public function delete(User $user, Term $term): bool
     {
         if ($user->isAdminOrMore()) {
-            return (int)($term->students_count ?? $term->students()->canceled(false)->count()) == 0;
+            return (int)($term->students_count ?? $term->students()->canceled(false)->count()) === 0;
         }
 
         return false;

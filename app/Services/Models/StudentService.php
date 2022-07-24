@@ -30,8 +30,7 @@ use Illuminate\Support\Facades\Log;
  */
 class StudentService extends ModelBaseService
 {
-    /** @var VariableSymbolService */
-    private $variableSymbolService;
+    private VariableSymbolService $variableSymbolService;
 
     public function __construct(VariableSymbolService $variableSymbolService)
     {
@@ -138,7 +137,7 @@ class StudentService extends ModelBaseService
     {
         $student = $this->getContext();
 
-        return $student->price_to_pay > 0 && $student->payment == StudentPaymentType::TRANSFER;
+        return $student->price_to_pay > 0 && $student->payment === StudentPaymentType::TRANSFER;
     }
 
     /**
@@ -198,7 +197,7 @@ class StudentService extends ModelBaseService
 
             try {
                 // If only private_note is changed, do not send notification
-                if (!(\count($dirty) == 1 && isset($dirty['private_note']))) {
+                if (!(\count($dirty) === 1 && isset($dirty['private_note']))) {
                     $student->notify(new StudentUpdatedNotification($student));
                 }
             } catch (\Throwable $e) {
@@ -332,7 +331,7 @@ class StudentService extends ModelBaseService
         return Pdf::loadView(
             'pdf.certificate.' . $file,
             \array_merge(['student' => $this->getContext()], $data),
-            $options
+            $options,
         );
     }
 

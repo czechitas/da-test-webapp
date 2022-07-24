@@ -10,8 +10,7 @@ use Illuminate\Support\Str;
 
 class RelationCountColumn extends Column
 {
-    /** @var Closure|null */
-    public $constraintQuery = null;
+    public ?Closure $constraintQuery = null;
 
     /**
      * Create new column of DataTable
@@ -41,10 +40,9 @@ class RelationCountColumn extends Column
     /**
      * Get name for select - can be DB::raw
      *
-     * @param  bool $finalName Get final name @see getFinalName
-     * @return string|Expression
+     * @param bool $finalName Get final name @see getFinalName
      */
-    public function getSelect(bool $finalName = false)
+    public function getSelect(bool $finalName = false): string|Expression
     {
         if ($finalName) {
             return $this->alias;

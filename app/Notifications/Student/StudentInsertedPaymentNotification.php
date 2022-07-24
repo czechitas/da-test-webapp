@@ -8,8 +8,7 @@ use CzechitasApp\Models\Student;
 
 class StudentInsertedPaymentNotification extends StudentBaseNotification
 {
-    /** @var float */
-    protected $price;
+    protected float $price;
 
     public function __construct(Student $student, float $price)
     {

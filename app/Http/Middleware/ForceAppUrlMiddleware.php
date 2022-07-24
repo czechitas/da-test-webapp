@@ -21,7 +21,7 @@ class ForceAppUrlMiddleware
             $expectedHost = \preg_replace('#https?://([^/]*)/*#', '$1', \config('app.url'));
             $host = \trim($request->header('host'), '/');
 
-            if ($expectedHost != $host) {
+            if ($expectedHost !== $host) {
                 $url = $request->secure() ? 'https://' : 'http://';
                 $url .= $expectedHost . '/' . \ltrim($request->getRequestUri(), '/');
 

@@ -64,13 +64,13 @@ return [
 
     'admin'        => [
         'menu' => [
-            'users'          => 'Uživatelé',
-            'orders'         => 'Objednávky',
-            'categories'     => 'Kategorie',
-            'terms'          => 'Termíny',
-            'students'       => 'Přihlášky',
-            'news'           => 'Aktuality',
-            'exports'        => 'Exporty',
+            'users'      => 'Uživatelé',
+            'orders'     => 'Objednávky',
+            'categories' => 'Kategorie',
+            'terms'      => 'Termíny',
+            'students'   => 'Přihlášky',
+            'news'       => 'Aktuality',
+            'exports'    => 'Exporty',
         ],
     ],
 

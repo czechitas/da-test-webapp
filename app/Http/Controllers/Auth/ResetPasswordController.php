@@ -25,10 +25,8 @@ class ResetPasswordController extends Controller
 
     /**
      * Where to redirect users after resetting their password.
-     *
-     * @var string
      */
-    protected $redirectTo = '/';
+    protected string $redirectTo = '/';
 
     public function __construct(BreadcrumbService $breadcrumbService)
     {

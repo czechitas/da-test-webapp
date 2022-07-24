@@ -77,20 +77,16 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
 
     /**
      * Students relationship builder
-     *
-     * @return Student|HasMany
      */
-    public function students()
+    public function students(): Student|HasMany
     {
         return $this->hasMany(Student::class, 'parent_id');
     }
 
     /**
      * Author of student payments relationship builder
-     *
-     * @return StudentPayment|HasMany
      */
-    public function authorPayments()
+    public function authorPayments(): StudentPayment|HasMany
     {
         return $this->hasMany(StudentPayment::class);
     }
@@ -111,7 +107,7 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
      *
      * @param array<string>|string $role
      */
-    public function isRole($role): bool
+    public function isRole(array|string $role): bool
     {
         $role = Arr::wrap($role);
 

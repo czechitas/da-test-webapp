@@ -42,13 +42,13 @@ class BackupDatabase extends Command
                 'mysql:host=%s;port=%s;dbname=%s',
                 \config('database.connections.mysql.host'),
                 \config('database.connections.mysql.port'),
-                \config('database.connections.mysql.database')
+                \config('database.connections.mysql.database'),
             ),
             \config('database.connections.mysql.username'),
             \config('database.connections.mysql.password'),
             [
                 'no-data' => ['password_resets'],
-            ]
+            ],
         );
 
         $tmpDisk = Storage::disk('local');

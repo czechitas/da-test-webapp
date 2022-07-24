@@ -6,17 +6,14 @@ namespace CzechitasApp\Services;
 
 class LogViewer
 {
-    /** @var string */
-    private $file;
+    private string $file;
 
-    /** @var string */
-    private $folder;
+    private string $folder;
 
-    /** @var string */
-    private $storage_path;
+    private string $storage_path;
 
     /** @var array<string, string> */
-    private $levels_classes = [
+    private array $levels_classes = [
         'debug' => 'info',
         'info' => 'info',
         'notice' => 'info',
@@ -30,7 +27,7 @@ class LogViewer
     ];
 
     /** @var array<string, string> */
-    private $levels_imgs = [
+    private array $levels_imgs = [
         'debug' => 'info-circle',
         'info' => 'info-circle',
         'notice' => 'info-circle',
@@ -136,10 +133,11 @@ class LogViewer
             '/\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})(?:[\+-]\d{4})?\] (\w+)\.(\w+): (.*)/',
             $file,
             -1,
-            \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY
+            \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY,
         );
 
-        for ($i = 0; $i < \count($log_data); $i += 5) {
+        $cntLogData = \count($log_data);
+        for ($i = 0; $i < $cntLogData; $i += 5) {
             $level = \strtolower($log_data[$i + 2]);
             $log[] = [
                 'context' => $log_data[$i + 1] ?? 'prod',

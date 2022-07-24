@@ -16,9 +16,9 @@ interface RedirectBack
      */
     public function redirectBack(
         Request $request,
-        $parameters,
+        int|string|BaseModel|array $parameters,
         string $defaultBackRoute,
-        array $extraParams = []
+        array $extraParams = [],
     ): RedirectResponse;
 
     /**

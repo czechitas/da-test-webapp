@@ -17,9 +17,9 @@ trait RedirectBack
      */
     public function redirectBack(
         Request $request,
-        $parameters,
+        int|string|BaseModel|array $parameters,
         string $defaultBackRoute = 'show',
-        array $extraParams = []
+        array $extraParams = [],
     ): RedirectResponse {
         $routeName = $this->getUrlRouteBack($request) ?: $defaultBackRoute;
         [$backRoute, $addParameters] = $this->backRoutes()[$routeName];
@@ -28,8 +28,8 @@ trait RedirectBack
             $backRoute,
             \array_merge(
                 $addParameters ? Arr::wrap($parameters) : [],
-                $extraParams
-            )
+                $extraParams,
+            ),
         );
     }
 

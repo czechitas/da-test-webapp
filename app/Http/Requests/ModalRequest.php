@@ -44,7 +44,7 @@ abstract class ModalRequest extends FormRequest
     public function getData(array $toMerge = []): array
     {
         return \array_merge([
-            'send_notification' => $this->input('send_notification') == '1',
+            'send_notification' => $this->input('send_notification') === '1',
         ], $toMerge);
     }
 }

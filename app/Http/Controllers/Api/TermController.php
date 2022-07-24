@@ -15,8 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TermController extends Controller
 {
-    /** @var TermService */
-    protected $termService;
+    protected TermService $termService;
 
     public function __construct(TermService $termService)
     {
@@ -28,14 +27,14 @@ class TermController extends Controller
         if (Auth::user()->can('list', Term::class)) {
             return \response()->json($this->termService->getApiList(
                 (int)$request->query('page', '1'),
-                (int)$request->query('perPage', '50')
+                (int)$request->query('perPage', '50'),
             )->get(['id', 'category_id', 'start', 'end', 'opening', 'price']));
         }
 
         if (Auth::user()->can('listParent', Term::class)) {
             return \response()->json($this->termService->getApiList(
                 (int)$request->query('page', '1'),
-                (int)$request->query('perPage', '50')
+                (int)$request->query('perPage', '50'),
             )->possibleLogin()->get(['id', 'category_id', 'start', 'end', 'price']));
         }
 

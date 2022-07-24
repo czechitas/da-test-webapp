@@ -20,7 +20,6 @@ use CzechitasApp\Services\BreadcrumbService;
 use CzechitasApp\Services\Models\CategoryService;
 use CzechitasApp\Services\Models\StudentService;
 use CzechitasApp\Services\Models\TermService;
-use CzechitasApp\Services\Models\UserService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -31,34 +30,25 @@ class TermController extends Controller implements RedirectBackContract
 {
     use RedirectBack;
 
-    /** @var TermService */
-    private $termService;
+    private TermService $termService;
 
-    /** @var BreadcrumbService */
-    private $breadcrumbService;
+    private BreadcrumbService $breadcrumbService;
 
-    /** @var CategoryService */
-    private $categoryService;
+    private CategoryService $categoryService;
 
-    /** @var StudentService */
-    private $studentService;
-
-    /** @var UserService */
-    private $userService;
+    private StudentService $studentService;
 
     public function __construct(
         TermService $termService,
         BreadcrumbService $breadcrumbService,
         CategoryService $categoryService,
         StudentService $studentService,
-        UserService $userService
     ) {
         $this->termService = $termService;
         $this->breadcrumbService = $breadcrumbService;
         $breadcrumbService->addLevel('admin.terms.index', \trans('terms.title'));
         $this->categoryService = $categoryService;
         $this->studentService = $studentService;
-        $this->userService = $userService;
     }
 
     /**
@@ -83,18 +73,16 @@ class TermController extends Controller implements RedirectBackContract
             ->addColumn((new Column('flag'))->search(null))
             ->addColumn((new Column('flag', null, 'flag_icon'))
                 ->onlyExtra()
-                ->printCallback(static function (Term $term) {
-                    return \config('czechitas.flags.' . ($term->flag ?: 'default'));
-                }))
+                ->printCallback(static fn (Term $term) => \config('czechitas.flags.' . ($term->flag ?: 'default'))))
             ->addColumn(
                 (new Column('start'))->jsonAlias('term_range')
                     ->dateSearch('%d.%m.%Y')
-                    ->printCallback(static function (Term $term) {
-                        return $term->term_range;
-                    })->orderCallback(static function (Builder $query, $dir): void {
+                    ->printCallback(
+                        static fn (Term $term) => $term->term_range,
+                    )->orderCallback(static function (Builder $query, $dir): void {
                         /** @var Builder<Term> $query */
                         $query->orderBy('start', $dir)->orderBy('end', $dir)->orderBy('id', $dir);
-                    })
+                    }),
             )
             ->addColumn((new Column('end'))->onlyExtra()->notInData())
             ->addColumn((new Column('category.name'))->jsonAlias('category')->noOrder())
@@ -103,13 +91,13 @@ class TermController extends Controller implements RedirectBackContract
                 (new RelationCountColumn(
                     'students',
                     'logged_in_students',
-                    'students'
+                    'students',
                 ))->constraint(
                     static function (Builder $query): void {
                         /** @var Builder<Student> $query */
                         $query->loggedOut(false)->canceled(false);
-                    }
-                )
+                    },
+                ),
             )
             ->addColumn(
                 // Added for optimization for term policy
@@ -118,7 +106,7 @@ class TermController extends Controller implements RedirectBackContract
                     ->constraint(static function (Builder $query): void {
                         /** @var Builder<Student> $query */
                         $query->canceled(false);
-                    })
+                    }),
             )
             ->addPolicies();
 

@@ -12,19 +12,16 @@ use Illuminate\View\View;
 
 class HomeController extends Controller
 {
-    /** @var CategoryService */
-    private $categoryService;
+    private CategoryService $categoryService;
 
-    /** @var BreadcrumbService */
-    private $breadcrumbService;
+    private BreadcrumbService $breadcrumbService;
 
-    /** @var NewsService */
-    private $newsService;
+    private NewsService $newsService;
 
     public function __construct(
         CategoryService $categoryService,
         BreadcrumbService $breadcrumbService,
-        NewsService $newsService
+        NewsService $newsService,
     ) {
         $this->categoryService = $categoryService;
         $this->breadcrumbService = $breadcrumbService;
