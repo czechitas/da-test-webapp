@@ -15,18 +15,23 @@ use CzechitasApp\Services\Models\StudentService;
 use CzechitasApp\Services\Models\TermService;
 use CzechitasApp\Services\Models\UserService;
 use CzechitasApp\Services\VariableSymbolService;
+use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
+use League\Flysystem\Filesystem;
+use Spatie\Dropbox\Client;
+use Spatie\FlysystemDropbox\DropboxAdapter;
 use Tamtamchik\NameCase\Formatter;
 
 class AppServiceProvider extends ServiceProvider
 {
-     /**
-      * All of the container bindings that should be registered.
-      *
-      * @var array<string, string>
-      */
+    /**
+     * All of the container bindings that should be registered.
+     *
+     * @var array<string, string>
+     */
     public $bindings = [
         AresService::class          => AresService::class,
     ];
@@ -68,6 +73,20 @@ class AppServiceProvider extends ServiceProvider
             'postnominal' => false,
             'lazy' => false,
         ]);
+
+        Storage::extend('dropbox', function ($app, $config) {
+            $adapter = new DropboxAdapter(new Client(
+                $config['authorization_token']
+            ));
+
+            $config['case_sensitive'] = false;
+
+            return new FilesystemAdapter(
+                new Filesystem($adapter, $config),
+                $adapter,
+                $config
+            );
+        });
     }
 
     /**

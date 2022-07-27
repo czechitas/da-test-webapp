@@ -1,6 +1,6 @@
 # Czechitas DA Testing App
 
-Aplikace využívá PHP framework [Laravel](https://laravel.com/docs/8.x/), [Bootstrap 4](https://getbootstrap.com/docs/4.6/getting-started/introduction/), [Webpack 5](https://webpack.js.org/).
+Aplikace využívá PHP framework [Laravel](https://laravel.com/docs/), [Bootstrap 4](https://getbootstrap.com/docs/4.6/getting-started/introduction/), [Webpack 5](https://webpack.js.org/).
 
 ## Dokumentace:
 
@@ -8,11 +8,11 @@ Aplikace využívá PHP framework [Laravel](https://laravel.com/docs/8.x/), [Boo
 
 ## Prerekvizity:
 
-- PHP 7.3+
+- PHP 8.1+, rozšíření PDO, a GD nebo Imagick
 - Composer 2 https://getcomposer.org/download/
 - MySQL - netestováno s jinou DB, ale možná bude fungovat
-- NodeJS 14+ - pro build assetů (JS/CSS)
-- npm
+- NodeJS 16+ - pro build assetů (JS/CSS)
+- npm 8.2+
 
 ## Instalace
 
@@ -47,7 +47,10 @@ Deploy do služby Heroku a pak už jen profitovat z výsledku 🎉🎉
 
 1. Vytvořit fork pro Váš běh digitální akademie
 1. Vytvořit účet na herokuapp.com
-1. Vytvořit si účet na AWS - je potřeba S3 Bucket nastavit.
+1. Vyřešit úložiště, Heroku při restartu smaže všechna data viz https://devcenter.heroku.com/articles/active-storage-on-heroku. Možnosti jsou:
+    1. Vytvořit si účet na AWS - je potřeba S3 Bucket nastavit
+    1. Připravit si FTP, nutný přístup přes URL k uloženým datům - pomalejší než AWS
+    1. Založit si Dropbox - nejpomalejší řešení, spíše nouzovka
 1. Vytvořit novou aplikaci na heroku
 1. Deployment method - Nastavit GitHub, Váš nový fork
 1. Enable Automatic deploys, pokud chcete, aby se Vám aplikace automaticky updatovala s novými commity
@@ -60,17 +63,29 @@ Deploy do služby Heroku a pak už jen profitovat z výsledku 🎉🎉
         2. heroku/php
     1. Naconfiguruj VARS 
         * `APP_KEY` ^^ viz .env
-        * `AWS_ACCESS_KEY_ID` - access key k S3
-        * `AWS_BUCKET` - jmeno AWS bucketu
-        * `AWS_DEFAULT_REGION` - region, kde je umisten S3 bucket
-        * `AWS_SECRET_ACCESS_KEY` - secret key
-        * `AWS_URL` - url s3 bucketu
         * `DB_DATABASE` - použij db name z `CLEARDB_DATABASE_URL`
         * `DB_HOST` - použij host z `CLEARDB_DATABASE_URL`
         * `DB_PASSWORD` - použij pass z `CLEARDB_DATABASE_URL`
         * `DB_PORT` - 3306
         * `DB_USERNAME` - použij username z `CLEARDB_DATABASE_URL` 
+    1. Vars pro **AWS S3** úložiště
         * `FILESYSTEM_DRIVER` - `s3`
+        * `AWS_ACCESS_KEY_ID` - access key k S3
+        * `AWS_BUCKET` - jmeno AWS bucketu
+        * `AWS_DEFAULT_REGION` - region, kde je umisten S3 bucket
+        * `AWS_SECRET_ACCESS_KEY` - secret key
+        * `AWS_URL` - url s3 bucketu
+    1. Vars pro **FTP** úložiště
+        * `FILESYSTEM_DRIVER` - `ftp`
+        * `FTP_HOST` - host pro připojení
+        * `FTP_USERNAME` - přístupové jméno k FTP
+        * `FTP_PASSWORD` - přístupové heslo k FTP
+        * `FTP_URL` - URL pro přístup k datům na FTP
+        * `FTP_PORT` - *nepovinné*, defaultně 21
+        * `FTP_ROOT` - *nepovinné*, pokud po připojení je potřeba změnit složku k ukládání
+    1. Vars pro **Dropbox** úložiště, **Pomalé, nouzovka!**
+        * `FILESYSTEM_DRIVER` - `dropbox`
+        * `DROPBOX_AUTH_TOKEN` - token pro připojení, lze získat při vytvoření aplikace přes https://www.dropbox.com/developers/apps
 
 V tomto bodu jste ready-to-deploy. V záložce Deploy stačí v sekci Manual deploy stisknout tlačítko a tradá.
 

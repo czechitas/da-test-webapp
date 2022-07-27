@@ -16,6 +16,9 @@
     ],
     "require": {
         "php": "^8.1",
+        "ext-gd": "*",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*",
         "arxeiss/passwordrule": "1.0.4",
         "bacon/bacon-qr-code": "dev-add-gd-backend#e41b372559e4911f29fd037137edaa1185e6bc8f",
         "bigit/vokativ": "dev-support-for-php8#ba38862d2dffb2f161e9e486b9f7af989ea21d81",
@@ -26,15 +29,14 @@
         "laravel/sanctum": "2.15.1",
         "laravel/ui": "3.4.6",
         "league/flysystem-aws-s3-v3": "3.1.1",
+        "league/flysystem-ftp": "3.1.1",
         "mpdf/mpdf": "8.1.1",
         "phpoffice/phpspreadsheet": "1.24.0",
         "prologue/alerts": "1.0.0",
         "queueworker/sansdaemon": "1.2.6",
         "resampler/resampler": "1.0",
-        "tamtamchik/namecase": "2.4.1",
-        "ext-pdo": "*",
-        "ext-pdo_mysql": "*",
-        "ext-gd": "*"
+        "spatie/flysystem-dropbox": "^2.0",
+        "tamtamchik/namecase": "2.4.1"
     },
     "require-dev": {
         "arxeiss/coding-standards": "0.11.0",

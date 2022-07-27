@@ -7,6 +7,7 @@ namespace CzechitasApp\Services\Models;
 use Carbon\Carbon;
 use CzechitasApp\Models\SendEmail;
 use CzechitasApp\Models\Student;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -64,6 +65,11 @@ class SendEmailService extends ModelBaseService
 
     public function getFileContent(): ?string
     {
+        $storageConfig = Storage::getConfig();
+        if (!empty($storageConfig['url'])) {
+            return Http::get(Storage::url($this->getContext()->filename))->body();
+        }
+
         if (Storage::exists($this->getContext()->filename)) {
             return Storage::get($this->getContext()->filename);
         }

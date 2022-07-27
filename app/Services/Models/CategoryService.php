@@ -10,6 +10,7 @@ use CzechitasApp\Services\UploadStorageService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Resampler\Resampler;
 
@@ -54,8 +55,7 @@ class CategoryService extends ModelBaseService
                             /** @var Builder<Term> $query */
                             $query->withTrashed();
                         },
-                    ])
-                    ->orderBy('position');
+                    ])->orderBy('position');
                 },
             ])
             ->withCount('children');
@@ -135,11 +135,24 @@ class CategoryService extends ModelBaseService
     public function getImageUrl(): ?string
     {
         $filePath = $this->getImagePath();
+        $url = Cache::get($this->getCacheKey());
+        if ($url !== null) {
+            return $url;
+        }
+
         if (UploadStorageService::exists($filePath)) {
-            return UploadStorageService::url($filePath) . '?v' . UploadStorageService::lastModified($filePath);
+            $url = UploadStorageService::url($filePath) . '?v' . UploadStorageService::lastModified($filePath);
+            Cache::put($this->getCacheKey(), $url, 30 * 60);
+
+            return $url;
         }
 
         return null;
+    }
+
+    protected function getCacheKey(): string
+    {
+        return 'category-image::' . $this->getImagePath();
     }
 
     /**
@@ -228,6 +241,7 @@ class CategoryService extends ModelBaseService
             ->save();
         UploadStorageService::writeStream($this->getImagePath(), $tmpDisk->readStream($currentPath));
         $tmpDisk->delete($currentPath);
+        Cache::forget($this->getCacheKey());
     }
 
     /**
