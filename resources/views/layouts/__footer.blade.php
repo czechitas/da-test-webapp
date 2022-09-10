@@ -1,5 +1,5 @@
 <div class="col-12 col-sm-6 col-md footer__about">
-    <img src="{{ asset('img/logo_footer.png') }}" alt="Logo" class="mb-3">
+    <img src="{{ asset('img/logo_footer-old.png') }}" alt="Logo" class="mb-3">
     {!! trans('app.footer.about') !!}
 </div>
 @inject('newsService', 'CzechitasApp\Services\Models\NewsService')
