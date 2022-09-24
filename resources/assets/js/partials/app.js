@@ -226,18 +226,18 @@ export default {
         }
       }
 
-      if (this.dtConfig.columns) {
-        var targets = [];
-        for (var i = 0; i < this.dtConfig.columns.length; i++) {
-          targets.push(i)
-        }
+      // if (this.dtConfig.columns) {
+      //   var targets = [];
+      //   for (var i = 0; i < this.dtConfig.columns.length; i++) {
+      //     targets.push(i)
+      //   }
 
-        if (this.dtConfig.columnDefs) {
-          this.dtConfig.columnDefs.push({targets:targets, render: this.preventXSSRenderer});
-        }else{
-          this.dtConfig.columnDefs = [{targets:targets, render: this.preventXSSRenderer}];
-        }
-      }
+      //   if (this.dtConfig.columnDefs) {
+      //     this.dtConfig.columnDefs.push({targets:targets, render: this.preventXSSRenderer});
+      //   }else{
+      //     this.dtConfig.columnDefs = [{targets:targets, render: this.preventXSSRenderer}];
+      //   }
+      // }
 
       // Init DataTable
       this.instance = $tableEl.DataTable(

@@ -26,7 +26,7 @@
                         @endcan
                         @can('delete', $user)
                             @component('components.modal_yes_no_form', [ 'id' => 'deleteUser', 'route' => route('admin.users.destroy', $user)] )
-                                @lang('users.delete_modal', ['name' => str_replace(" ", "&nbsp;", e($user->name))])
+                                @lang('users.delete_modal', ['name' => str_replace(" ", "&nbsp;", $user->name)])
                             @endcomponent
                             <a href="#deleteUser" data-toggle="modal" class="btn btn-sm btn-danger">
                                 <i class="fa fa-fw fa-trash"></i>
