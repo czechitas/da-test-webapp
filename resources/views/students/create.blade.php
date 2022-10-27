@@ -111,7 +111,7 @@
                         <tr class="configurable" data-part="select_payment">
                             <td>@lang('students.form.payment'):</td>
                             <td>
-                                @foreach (\CzechitasApp\Models\Enums\StudentPaymentType::getAvailableValues() as $paymentType)
+                                @foreach (['transfer', 'cash'] as $paymentType)
                                     <span class="custom-control custom-radio{{ $errors->has('payment') ? ' is-invalid' : '' }}">
                                         <input type="radio" id="payment_{{ $paymentType }}" name="payment" value="{{ $paymentType }}" class="custom-control-input" {{ oldChecked('payment', $paymentType) }} required>
                                         <label class="custom-control-label" for="payment_{{ $paymentType }}">@lang('students.payments.'.$paymentType)<small class="text-muted"> - @lang("students.payments.{$paymentType}_desc")</small></label>
