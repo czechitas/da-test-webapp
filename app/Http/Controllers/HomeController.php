@@ -35,7 +35,7 @@ class HomeController extends Controller
      */
     public function index(): View
     {
-        $categories = $this->categoryService->getHomepageListQuery()->get();
+        $categories = $this->categoryService->getHomepageListQuery()->get()->reverse();
         $news = $this->newsService->getNewsListQuery()->limit(3)->get();
 
         return \view('home.intro', \compact('categories', 'news'));
