@@ -8,7 +8,7 @@ use CzechitasApp\Http\Controllers\Controller;
 use CzechitasApp\Rules\EmailRule;
 use CzechitasApp\Services\BreadcrumbService;
 use Illuminate\Foundation\Auth\ResetsPasswords;
-use PasswordRule\PasswordRule;
+use Illuminate\Validation\Rules\Password;
 
 class ResetPasswordController extends Controller
 {
@@ -61,7 +61,7 @@ class ResetPasswordController extends Controller
         return [
             'token' => 'required',
             'email' => ['required', new EmailRule()],
-            'password' => ['required', new PasswordRule(), 'confirmed'],
+            'password' => ['required', Password::defaults(), 'confirmed'],
         ];
     }
 }

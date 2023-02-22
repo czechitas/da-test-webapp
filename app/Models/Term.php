@@ -43,17 +43,6 @@ class Term extends BaseModel
     use SoftDeletes;
 
     /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array<string>
-     */
-    protected $dates = [
-        'opening',
-        'created_at',
-        'updated_at',
-    ];
-
-    /**
      * The attributes that aren't mass assignable.
      *
      * @var array<string>
@@ -68,6 +57,9 @@ class Term extends BaseModel
     protected $casts = [
         'start'             => 'date',
         'end'               => 'date',
+        'opening' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     /**

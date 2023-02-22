@@ -9,8 +9,8 @@ use CzechitasApp\Rules\EmailRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\Rules\Unique;
-use PasswordRule\PasswordRule;
 
 class CreateUserRequest extends FormRequest
 {
@@ -41,7 +41,7 @@ class CreateUserRequest extends FormRequest
             'name'                  => 'required|string|max:255',
             'email'                 => ['required', new EmailRule(), 'max:190', $this->getUniqueRule()],
             'role'                  => ['required', Rule::in(UserRole::getAvailableValues())],
-            'password'              => ['required', new PasswordRule(), 'confirmed'],
+            'password'              => ['required', Password::defaults(), 'confirmed'],
         ];
 
         return $rules;

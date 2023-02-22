@@ -8,14 +8,9 @@ use BaconQrCode\Common\ErrorCorrectionLevel;
 use BaconQrCode\Encoder\Encoder;
 use BaconQrCode\Renderer\Color\Alpha;
 use BaconQrCode\Renderer\Color\Rgb;
-use BaconQrCode\Renderer\Image\GDImageBackEnd;
-use BaconQrCode\Renderer\Image\ImageBackEndInterface;
+use BaconQrCode\Renderer\GDLibRenderer;
 use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
-use BaconQrCode\Renderer\Image\SvgImageBackEnd;
 use BaconQrCode\Renderer\ImageRenderer;
-use BaconQrCode\Renderer\Module\ModuleInterface;
-use BaconQrCode\Renderer\Module\RoundnessModule;
-use BaconQrCode\Renderer\Module\SquareModule;
 use BaconQrCode\Renderer\RendererStyle\Fill;
 use BaconQrCode\Renderer\RendererStyle\Gradient;
 use BaconQrCode\Renderer\RendererStyle\GradientType;
@@ -78,13 +73,8 @@ class QRPayment
     /**
      * @param array<string, mixed> $settings
      */
-    private function toText(
-        ImageBackEndInterface $imageBackend,
-        bool $base64 = false,
-        array $settings = [],
-        ?Fill $fill = null,
-        ?ModuleInterface $module = null,
-    ): string {
+    private function toText(bool $base64 = false, array $settings = []): string
+    {
         $settings = \array_merge([
             'size'            => 400,
             'correctionLevel' => ErrorCorrectionLevel::M(),
@@ -92,10 +82,24 @@ class QRPayment
             'margin'          => 4,
         ], $settings);
 
-        $renderer = new ImageRenderer(
-            new RendererStyle($settings['size'], $settings['margin'], $module, null, $fill),
-            $imageBackend,
-        );
+        if (\class_exists(Imagick::class)) {
+            $renderer = new ImageRenderer(
+                new RendererStyle($settings['size'], $settings['margin'], null, null, Fill::uniformGradient(
+                    new Alpha(0, new Rgb(0, 0, 0)),
+                    new Gradient(new Rgb(157, 0, 86), new Rgb(110, 0, 61), GradientType::VERTICAL()),
+                )),
+                new ImagickImageBackEnd(),
+            );
+        } else {
+            $renderer = new GDLibRenderer(
+                $settings['size'],
+                $settings['margin'],
+                'png',
+                9,
+                Fill::uniformColor(new Rgb(255, 255, 255), new Rgb(157, 0, 86)),
+            );
+        }
+
         $writer = new Writer($renderer);
 
         $binary = $writer->writeString($this->getCodeContent(), $settings['encoding'], $settings['correctionLevel']);
@@ -111,42 +115,7 @@ class QRPayment
      */
     public function toPngText(bool $base64 = false, array $settings = []): string
     {
-        if (\class_exists(Imagick::class)) {
-            return $this->toText(
-                new ImagickImageBackEnd(),
-                $base64,
-                $settings,
-                Fill::uniformGradient(
-                    new Alpha(0, new Rgb(0, 0, 0)),
-                    new Gradient(new Rgb(157, 0, 86), new Rgb(110, 0, 61), GradientType::VERTICAL()),
-                ),
-                SquareModule::instance(),
-            );
-        }
-
-        return $this->toText(
-            new GDImageBackEnd(),
-            $base64,
-            $settings,
-            Fill::uniformColor(new Rgb(255, 255, 255), new Rgb(157, 0, 86)),
-        );
-    }
-
-    /**
-     * @param array<string, mixed> $settings
-     */
-    public function toSvgText(bool $base64 = false, array $settings = []): string
-    {
-        return $this->toText(
-            new SvgImageBackEnd(),
-            $base64,
-            $settings,
-            Fill::uniformGradient(
-                new Alpha(0, new Rgb(0, 0, 0)),
-                new Gradient(new Rgb(139, 58, 58), new Rgb(111, 34, 34), GradientType::VERTICAL()),
-            ),
-            new RoundnessModule(0.5),
-        );
+        return $this->toText($base64, $settings);
     }
 
     public static function bankAccToIBAN(string $bankAcc): string

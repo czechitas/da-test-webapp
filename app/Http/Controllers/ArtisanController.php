@@ -78,7 +78,7 @@ class ArtisanController extends Controller
         // Is running as logged in user - return 404 to not save to history
         // For other services accessing via key param send 200
         return \response($outputText, (Auth::user() === null ? 200 : 404))
-                  ->header('Content-Type', 'text/plain');
+            ->header('Content-Type', 'text/plain');
     }
 
     /**
@@ -127,6 +127,7 @@ class ArtisanController extends Controller
 
     public function queueWork(): Response
     {
+        // To properly use this, https://github.com/orobogenius/sansdaemon must be installed
         return $this->callArtisan(
             'queue:work',
             [

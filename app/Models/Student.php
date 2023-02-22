@@ -59,15 +59,15 @@ class Student extends BaseModel
     use Notifiable;
 
     /**
-     * The attributes that should be mutated to dates.
+     * The attributes that should be cast to native types.
      *
-     * @var array<string>
+     * @var array<string, string>
      */
-    protected $dates = [
-        'birthday',
-        'logged_out_date',
-        'created_at',
-        'updated_at',
+    protected $casts = [
+        'birthday' => 'datetime',
+        'logged_out_date' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     /**

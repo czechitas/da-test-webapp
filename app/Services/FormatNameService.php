@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace CzechitasApp\Services;
 
+use Granam\CzechVocative\CzechName;
 use Tamtamchik\NameCase\Formatter;
-use Vokativ\Name;
 
 class FormatNameService
 {
-    private Name $nameLib;
+    private CzechName $nameLib;
 
-    public function __construct(Name $nameLib)
+    public function __construct(CzechName $nameLib)
     {
         $this->nameLib = $nameLib;
     }
@@ -29,7 +29,7 @@ class FormatNameService
                 return \mb_strtolower($name);
             }
 
-            return $this->formatCase($this->nameLib->vokativ($name));
+            return $this->formatCase($this->nameLib->vocative($name));
         })->implode(' ');
     }
 

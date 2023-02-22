@@ -24,16 +24,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class SendEmail extends BaseModel
 {
     /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array<string>
-     */
-    protected $dates = [
-        'created_at',
-        'updated_at',
-    ];
-
-    /**
      * The attributes that aren't mass assignable.
      *
      * @var array<string>
@@ -46,6 +36,8 @@ class SendEmail extends BaseModel
      * @var array<string, string>
      */
     protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
         'attachments'   => 'array',
     ];
 

@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace CzechitasApp\Notifications\Student;
 
 use CzechitasApp\Mail\NotificationWithQRPaymentMail;
-use CzechitasApp\Mail\Symfony\DataPart;
 use CzechitasApp\Models\Student;
 use CzechitasApp\Notifications\BaseQueueableNotification;
 use CzechitasApp\Services\Models\StudentService;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Part\DataPart;
 
 abstract class StudentBaseNotification extends BaseQueueableNotification
 {

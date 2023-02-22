@@ -6,7 +6,7 @@ namespace CzechitasApp\Http\Requests\Profile;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
-use PasswordRule\PasswordRule;
+use Illuminate\Validation\Rules\Password;
 
 class UpdateProfileRequest extends FormRequest
 {
@@ -27,7 +27,7 @@ class UpdateProfileRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'password' => ['nullable', new PasswordRule(), 'confirmed'],
+            'password' => ['nullable', Password::defaults(), 'confirmed'],
         ];
     }
 

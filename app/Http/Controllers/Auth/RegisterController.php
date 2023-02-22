@@ -12,7 +12,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use PasswordRule\PasswordRule;
+use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
 {
@@ -50,7 +50,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => ['required', new EmailRule(), 'unique:users'],
-            'password' => ['required', new PasswordRule(), 'confirmed'],
+            'password' => ['required', Password::defaults(), 'confirmed'],
         ], [
             'email.unique' => \trans('auth.registration.validation.unique_email'),
             'password.confirmed' => \trans('auth.registration.validation.confirmed_pass'),

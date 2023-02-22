@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace CzechitasApp\Modules\AjaxDataTables;
 
 use Closure;
+use Illuminate\Contracts\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 

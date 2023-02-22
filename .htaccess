@@ -7,9 +7,6 @@ ErrorDocument 403 /error
     RewriteCond %{HTTPS} off
     RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
-    RewriteRule docs/?$ public/index.php [L]
-    RewriteRule docs/?$ public/index.php [L,R=301]
-
     RewriteCond %{REQUEST_URI} !^public
     RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>

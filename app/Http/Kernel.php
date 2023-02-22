@@ -63,7 +63,7 @@ class Kernel extends HttpKernel
      *
      * @var array<string, string>
      */
-    protected $routeMiddleware = [
+    protected $middlewareAliases = [
         'auth' => \CzechitasApp\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,

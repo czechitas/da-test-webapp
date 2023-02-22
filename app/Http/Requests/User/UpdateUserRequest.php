@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace CzechitasApp\Http\Requests\User;
 
 use CzechitasApp\Models\User;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\Rules\Unique;
-use PasswordRule\PasswordRule;
 
 class UpdateUserRequest extends CreateUserRequest
 {
@@ -30,7 +30,7 @@ class UpdateUserRequest extends CreateUserRequest
     {
         $rules = parent::rules();
 
-        $rules['password'] = ['nullable', new PasswordRule(), 'confirmed'];
+        $rules['password'] = ['nullable', Password::defaults(), 'confirmed'];
 
         return $rules;
     }

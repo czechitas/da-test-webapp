@@ -130,7 +130,15 @@ return [
     */
 
     'custom'               => [
-        'password' => ['min' => 'Heslo musí být minimálně :min znaků dlouhé'],
+        'password' => [
+            'min' => 'Heslo musí být minimálně :min znaků dlouhé',
+        ],
+    ],
+
+    'password' => [
+        'min' => 'Heslo musí být minimálně :min znaků dlouhé',
+        'mixed' => 'Heslo musí obsahovat minimálně jedno velké a jedno malé písmeno',
+        'numbers' => 'Heslo musí obsahovat minimálně jednu číslici',
     ],
 
     /*

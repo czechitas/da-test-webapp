@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Validation\Rules\Password;
 use League\Flysystem\Filesystem;
 use Spatie\Dropbox\Client;
 use Spatie\FlysystemDropbox\DropboxAdapter;
@@ -74,9 +75,9 @@ class AppServiceProvider extends ServiceProvider
             'lazy' => false,
         ]);
 
-        Storage::extend('dropbox', function ($app, $config) {
+        Storage::extend('dropbox', static function ($app, $config) {
             $adapter = new DropboxAdapter(new Client(
-                $config['authorization_token']
+                $config['authorization_token'],
             ));
 
             $config['case_sensitive'] = false;
@@ -84,9 +85,11 @@ class AppServiceProvider extends ServiceProvider
             return new FilesystemAdapter(
                 new Filesystem($adapter, $config),
                 $adapter,
-                $config
+                $config,
             );
         });
+
+        Password::defaults(static fn () => Password::min(6)->letters()->mixedCase()->numbers());
     }
 
     /**

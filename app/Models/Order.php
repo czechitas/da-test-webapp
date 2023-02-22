@@ -43,30 +43,23 @@ class Order extends BaseModel
     use Notifiable, SoftDeletes;
 
     /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array<string>
-     */
-    protected $dates = [
-        'signature_date',
-        'start_date_1',
-        'start_date_2',
-        'start_date_3',
-        'final_date_from',
-        'final_date_to',
-
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
-
-    /**
      * The attributes that should be cast to native types.
      *
      * @var array<string, string>
      */
     protected $casts = [
-        'xdata'             => 'array',
+        'signature_date' => 'datetime',
+        'start_date_1' => 'datetime',
+        'start_date_2' => 'datetime',
+        'start_date_3' => 'datetime',
+        'final_date_from' => 'datetime',
+        'final_date_to' => 'datetime',
+
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
+
+        'xdata' => 'array',
     ];
 
     /**

@@ -6,7 +6,7 @@ namespace CzechitasApp\Http\Requests\Api\Profile;
 
 use CzechitasApp\Http\Requests\Api\BaseFormRequest;
 use CzechitasApp\Rules\EmailRule;
-use PasswordRule\PasswordRule;
+use Illuminate\Validation\Rules\Password;
 
 class RegisterUserRequest extends BaseFormRequest
 {
@@ -20,7 +20,7 @@ class RegisterUserRequest extends BaseFormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => ['required', new EmailRule(), 'unique:users'],
-            'password' => ['required', new PasswordRule()],
+            'password' => ['required', Password::defaults()],
         ];
     }
 }
