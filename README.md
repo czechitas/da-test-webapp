@@ -50,7 +50,7 @@ Deploy do služby Heroku a pak už jen profitovat z výsledku 🎉🎉
 1. Vyřešit úložiště, Heroku při restartu smaže všechna data viz https://devcenter.heroku.com/articles/active-storage-on-heroku. Možnosti jsou:
     1. Vytvořit si účet na AWS - je potřeba S3 Bucket nastavit
     1. Připravit si FTP, nutný přístup přes URL k uloženým datům - pomalejší než AWS
-    1. Založit si Dropbox - nejpomalejší řešení, spíše nouzovka
+    1. Založit si Dropbox - nejpomalejší řešení, spíše nouzovka. Je potřeba také nainstalovat `composer require spatie/flysystem-dropbox`
 1. Vytvořit novou aplikaci na heroku
 1. Deployment method - Nastavit GitHub, Váš nový fork
 1. Enable Automatic deploys, pokud chcete, aby se Vám aplikace automaticky updatovala s novými commity

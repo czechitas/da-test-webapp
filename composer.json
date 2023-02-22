@@ -29,7 +29,6 @@
         "phpoffice/phpspreadsheet": "1.27.1",
         "prologue/alerts": "1.1.0",
         "resampler/resampler": "1.0",
-        "spatie/flysystem-dropbox": "2.0.6",
         "tamtamchik/namecase": "3.0.0"
     },
     "require-dev": {
