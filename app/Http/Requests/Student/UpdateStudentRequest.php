@@ -17,8 +17,8 @@ class UpdateStudentRequest extends CreateStudentRequest
         $term = $this->route()->student->term;
         $rules = parent::rules($term);
 
-        unset($rules['forename']);
-        unset($rules['surname']);
+        // unset($rules['forename']);
+        // unset($rules['surname']);
         unset($rules['terms_conditions']);
 
         return $rules;
@@ -31,9 +31,12 @@ class UpdateStudentRequest extends CreateStudentRequest
     {
         $data = parent::getData($addTerm);
 
-        unset($data['term_id']);
-        unset($data['forename']);
-        unset($data['surname']);
+        if ($data['term_id'] === null) {
+            unset($data['term_id']);
+        }
+
+        // unset($data['forename']);
+        // unset($data['surname']);
 
         return $data;
     }
