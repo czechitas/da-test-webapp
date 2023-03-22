@@ -16,7 +16,6 @@ import (
 heroku login
 
 ./heroku-app-creator -awsAccess xxx -awsSecret xxx -awsBucketUrl xxx -numapps 1 -dryrun
-./heroku-app-creator -awsAccess AKIASWETIZ4CYUXI52EB -awsSecret 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 -awsBucketUrl https://da-test-webapp.s3.eu-central-1.amazonaws.com/ -numapps 1 -dryrun
 
 GOOS=darwin GOARCH=amd64 go build -o heroku-app-creator main.go
 GOOS=windows GOARCH=amd64 go build -o heroku-app-creator.exe main.go
