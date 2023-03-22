@@ -69,7 +69,7 @@ func main() {
 
 	// Create branches and apps
 	for i := 0; i <= len(teams); i++ {
-		if i == numApps+1 {
+		if i == numApps {
 			break
 		}
 
