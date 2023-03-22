@@ -34,3 +34,6 @@ nbproject
 ### Sublime Text ###
 *.sublime-*
 !*.sublime-project
+
+### Sail - mysql ###
+/sail-mysql
