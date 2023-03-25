@@ -3,6 +3,7 @@ package main
 import (
 	"crypto/rand"
 	"encoding/base64"
+	"encoding/json"
 	"flag"
 	"fmt"
 	"github.com/fatih/color"
@@ -14,8 +15,7 @@ import (
 
 /*
 heroku login
-
-./heroku-app-creator -awsAccess xxx -awsSecret xxx -awsBucketUrl xxx -numapps 1 -dryrun
+./heroku-app-creator --path=./teams.json --awsAccess=${da_test_AWS_ACCESS_KEY_ID} --awsSecret=${da_test_AWS_SECRET_ACCESS_KEY} --awsBucketUrl=${da_text_AWS_URL} -dry
 
 GOOS=darwin GOARCH=amd64 go build -o heroku-app-creator main.go
 GOOS=windows GOARCH=amd64 go build -o heroku-app-creator.exe main.go
@@ -39,27 +39,21 @@ func runCommand(command string, dry bool) {
 	}
 }
 
-var teams = [7]string{
-	"bug-busters",
-	"bugitas",
-	"testing-queens",
-	"it-tykve",
-	"lady-bugs",
-	"dex",
-	"buginy",
+type Teams struct {
+	Teams []string `json:"teams"`
 }
 
 func main() {
 	// Parse command-line arguments
 	var dryRun bool
-	var numApps int
+	var filePath string
 
 	var awsAccessKeyId string
 	var awsSecretAccessKey string
 	var awsBucketUrl string
 
-	flag.BoolVar(&dryRun, "dryrun", false, "Enable dry run mode (do not execute commands)")
-	flag.IntVar(&numApps, "numapps", 1, "Number of branches and apps to create")
+	flag.StringVar(&filePath, "path", "", "Path to a file contains teams")
+	flag.BoolVar(&dryRun, "dry", false, "Enable dry run mode (do not execute commands)")
 
 	flag.StringVar(&awsAccessKeyId, "awsAccess", "", "AWS_ACCESS_KEY_ID")
 	flag.StringVar(&awsSecretAccessKey, "awsSecret", "", "AWS_SECRET_ACCESS_KEY")
@@ -67,23 +61,39 @@ func main() {
 
 	flag.Parse()
 
-	// Create branches and apps
-	for i := 0; i <= len(teams); i++ {
-		if i == numApps {
-			break
-		}
+	// Check if the path parameter is empty
+	if filePath == "" {
+		log.Fatal("missing required argument: path")
+	}
 
+	// Read the JSON file
+	file, err := os.ReadFile(filePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Decode the JSON data into a Teams struct
+	var teams Teams
+	err = json.Unmarshal(file, &teams)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Create branches and apps
+	//for i := 0; i <= len(teams); i++ {
+	for _, team := range teams.Teams {
 		//branchName := fmt.Sprintf("team-%d", i)
 		//appName := fmt.Sprintf("da-test-webapp-team-%d", i)
 
-		branchName := teams[i]
-		appName := teams[i]
+		branchName := team
+		appName := fmt.Sprintf("%s-da-test", team)
 
 		//fmt.Printf("%sCreating app %d: %s%s\n", Cyan, i, appName, ResetColor)
 		color.Cyan("Creating app %s", appName)
 
 		// Create a new Git branch
 		runCommand(fmt.Sprintf("git branch %s", branchName), dryRun)
+		runCommand(fmt.Sprintf("git push --set-upstream origin %s", branchName), dryRun)
 
 		// Create a new Heroku app
 		runCommand(fmt.Sprintf("heroku create %s --region eu", appName), dryRun)
@@ -128,7 +138,7 @@ func main() {
 		if _, err := rand.Read(appKeyBytes); err != nil {
 			log.Fatal(err)
 		}
-		appKey := base64.StdEncoding.EncodeToString(appKeyBytes)
+		appKey := fmt.Sprintf("base64:%s", base64.StdEncoding.EncodeToString(appKeyBytes))
 
 		// Set default environment variables for the Heroku app
 		runCommand(fmt.Sprintf(`heroku config:set -a %s \
