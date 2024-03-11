@@ -46,7 +46,7 @@ return [
         'term_count' => 'Termínů / smazaných / otevřených',
         'action'     => 'Akce',
 
-        'move_up'    => 'Posunout nahoru',
+        // 'move_up'    => 'Posunout nahoru',
         'move_down'  => 'Posunout dolů',
     ],
 

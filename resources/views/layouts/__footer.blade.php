@@ -1,8 +1,8 @@
-<div class="col-12 col-sm-6 col-md footer__about">
-    <img src="{{ asset('img/logo_footer.png') }}" alt="Logo" class="mb-3">
+<div class="col-12 col-sm-12 col-md footer__about">
+    <img src="{{ asset('img/logo_footer-old.png') }}" alt="Logo" class="mb-3">
     {!! trans('app.footer.about') !!}
 </div>
-@inject('newsService', 'CzechitasApp\Services\Models\NewsService')
+{{-- @inject('newsService', 'CzechitasApp\Services\Models\NewsService')
 <div class="col-12 col-sm-6 col-md">
     <h4>@lang('app.footer.news')</h4>
     @foreach ($newsService->getNewsListQuery()->limit(2)->get() as $news)
@@ -11,13 +11,13 @@
             <time>{{ $news->created_at->format("d.m.Y H:i") }}</time>
         </div>
     @endforeach
-</div>
+</div> --}}
 <div class="col-12 col-sm-6 col-md footer__links">
     <h4>@lang('app.footer.links')</h4>
     <a href="{{ route('static.parents') }}">@lang('app.footer.parents')</a>
     <a href="{{ route('static.teachers') }}">@lang('app.footer.teachers')</a>
     <a href="{{ route('orders.create') }}">@lang('app.footer.order')</a>
-    <a href="https://www.czechitas.cz/">Czechitas</a>
+    <a href="https://www.google.com/">Czechitas</a>
 </div>
 <div class="col-12 col-sm-6 col-md footer__contact">
     <h4>@lang('app.footer.contact')</h4>

@@ -17,7 +17,7 @@
                         </p>
 
                         @component('components.modal_yes_no_form', [ 'id' => 'deleteUser', 'route' => route('admin.users.destroy', $user)] )
-                            @lang('users.delete_modal', ['name' => e($user->name)])
+                            @lang('users.delete_modal', ['name' => $user->name])
                         @endcomponent
                     @else
                         <h4>@lang('users.delete.cannot')</h4>

@@ -41,7 +41,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::define('access-admin-routes', static fn (User $user) => $user->isAdminOrMore());
+        Gate::define('access-admin-routes', static fn (User $user) => $user->isRoleMaster());
 
         Gate::resource('exports', ExportPolicy::class, [
             'list'          => 'list',

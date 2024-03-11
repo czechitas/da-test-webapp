@@ -170,6 +170,7 @@ class StudentController extends Controller implements RedirectBackContract
      */
     public function sendEmails(Student $student): View
     {
+        sleep(10);
         $this->authorize('sendEmails', $student);
         $this->addBreadcrumb($student)->addLevelWithUrl('', \trans('students.breadcrumbs.send_emails'));
 

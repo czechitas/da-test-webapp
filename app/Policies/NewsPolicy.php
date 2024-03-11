@@ -17,7 +17,8 @@ class NewsPolicy
      */
     public function list(User $user): bool
     {
-        return $user->isAdminOrMore();
+        return false;
+        // return $user->isAdminOrMore();
     }
 
     /**
@@ -25,7 +26,8 @@ class NewsPolicy
      */
     public function create(User $user): bool
     {
-        return $user->isAdminOrMore();
+        return false;
+        // return $user->isAdminOrMore();
     }
 
     /**
@@ -33,7 +35,8 @@ class NewsPolicy
      */
     public function update(User $user, News $news): bool
     {
-        return $user->isAdminOrMore();
+        return false;
+        // return $user->isAdminOrMore();
     }
 
     /**
@@ -41,6 +44,7 @@ class NewsPolicy
      */
     public function delete(User $user, News $news): bool
     {
-        return $user->isAdminOrMore();
+        return false;
+        // return $user->isAdminOrMore();
     }
 }

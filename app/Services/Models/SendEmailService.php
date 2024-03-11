@@ -65,6 +65,8 @@ class SendEmailService extends ModelBaseService
 
     public function getFileContent(): ?string
     {
+        return null;
+
         $storageConfig = Storage::getConfig();
         if (!empty($storageConfig['url'])) {
             return Http::get(Storage::url($this->getContext()->filename))->body();

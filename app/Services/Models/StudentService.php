@@ -192,14 +192,14 @@ class StudentService extends ModelBaseService
         $ret = null;
         $student = $this->getContext()->fill($data);
         if ($student->isDirty()) {
-            $dirty = $student->getDirty();
+            // $dirty = $student->getDirty();
             $ret = $student->save();
 
             try {
                 // If only private_note is changed, do not send notification
-                if (!(\count($dirty) === 1 && isset($dirty['private_note']))) {
+                // if (!(\count($dirty) === 1 && isset($dirty['private_note']))) {
                     $student->notify(new StudentUpdatedNotification($student));
-                }
+                // }
             } catch (\Throwable $e) {
                 Log::warning($e->getMessage(), ['exception' => $e]);
             }
@@ -261,7 +261,7 @@ class StudentService extends ModelBaseService
      */
     public function updateLogout(array $data): ?bool
     {
-        $sendNotification = $data['send_notification'];
+        $sendNotification = true; //$data['send_notification'];
         unset($data['send_notification']);
 
         $ret = null;
@@ -298,7 +298,7 @@ class StudentService extends ModelBaseService
      */
     public function updateCanceled(array $data): ?bool
     {
-        $sendNotification = $data['send_notification'];
+        $sendNotification = true; //$data['send_notification'];
         unset($data['send_notification']);
 
         $ret = null;
@@ -349,6 +349,6 @@ class StudentService extends ModelBaseService
             ->orderBy('received_at', 'desc')
             ->first();
 
-        return $this->generateCertificatePdf('payment', ['paymentDate' => $lastPayment->received_at]);
+        return $this->generateCertificatePdf('payment_non_exist', ['paymentDate' => $lastPayment->received_at]);
     }
 }

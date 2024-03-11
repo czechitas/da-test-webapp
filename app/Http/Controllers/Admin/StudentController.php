@@ -99,8 +99,8 @@ class StudentController extends Controller implements RedirectBackContract
                 ->onlyExtra()
                 ->printCallback(static fn (Student $student) => \studentListClass($student)))
             ->addColumn((new Column('parent_name'))->notInData()->noOrder()) // Do search
-            ->addColumn((new Column('birthday'))->notInData()->dateSearch('%d.%m.%Y')->noOrder())
-            ->addColumn((new Column('birthday'))->notInData()->dateSearch('%e.%c.%Y')->noOrder())
+            // ->addColumn((new Column('birthday'))->notInData()->dateSearch('%d.%m.%Y')->noOrder())
+            // ->addColumn((new Column('birthday'))->notInData()->dateSearch('%e.%c.%Y')->noOrder())
             ->addColumn((new Column('variable_symbol'))->notInData()->noOrder())
             ->addPolicies();
 
