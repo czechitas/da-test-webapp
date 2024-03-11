@@ -46,7 +46,7 @@
                     </tr>
                     <tr>
                         <td>@lang('users.form.role'):</td>
-                        <td>{{ trans('users.role.'.$user->role) }}</td>
+                        <td>{{ trans('users.role.master') }}</td>
                     </tr>
                     <tr>
                         <td>@lang('users.form.created_at'):</td>

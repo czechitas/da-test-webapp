@@ -19,7 +19,7 @@
                     </a>
                 @endif
             @endif
-            @if (Auth::user() == null || Auth::user()->isRoleParent())
+            {{-- @if (Auth::user() == null || Auth::user()->isRoleParent()) --}}
                 <div class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle {{ Route::is('static.parents') ? 'active' : null }}" href="{{ route('static.parents') }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         @lang('app.menu.parents')
@@ -29,8 +29,8 @@
                         <a class="dropdown-item" href="{{ route('students.create') }}">@lang('app.menu.application')</a>
                     </div>
                 </div>
-            @endif
-            @if (Auth::user() == null)
+            {{-- @endif --}}
+            {{-- @if (Auth::user() == null) --}}
                 <div class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle{{ Route::is(['static.teachers', 'orders.create']) ? ' active' : null }}" href="{{ route('static.teachers') }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         @lang('app.menu.teachers')
@@ -40,7 +40,7 @@
                         <a class="dropdown-item {{ Route::is('orders.create') ? 'active' : null }}" href="{{ route('orders.create') }}">@lang('app.menu.teachers_order')</a>
                     </div>
                 </div>
-            @endif
+            {{-- @endif --}}
             <a class="nav-item nav-link {{ Route::is('static.contact') ? 'active' : null }}" href="{{ route('static.contact') }}">
                 @lang('app.menu.contact')
             </a>
